@@ -1,7 +1,17 @@
 .profile__add-button {
-  max-width: 150px;
+  background-image: url(../../../images/Add\ Button.svg);
+  width: 150px;
+  height: 50px;
   margin: 0;
   padding: 0;
-  background: #000;
+  background-color: #000;
   border: 0;
+}
+
+@media screen and (max-width: 670px) {
+  .profile__add-button {
+    margin-top: 36px;
+    width: 282px;
+    background-image: url(../../../images/Add\ Button\ Mobile.svg);
+  } 
 }
