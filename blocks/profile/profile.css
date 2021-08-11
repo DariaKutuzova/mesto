@@ -8,3 +8,12 @@
   position: relative;
 
 }
+
+@media screen and (max-width: 670px) {
+  .profile {
+    flex-direction: column;
+    min-height: 286px;
+    padding-top: 42px;
+    justify-content: flex-start;
+  } 
+}

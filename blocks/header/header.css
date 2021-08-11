@@ -4,6 +4,14 @@
   justify-content: flex-start;
   align-items: flex-start;
   border-bottom: 1px solid rgba(54, 54, 54, 0.7);
-  min-height: 74px;
+  height: 74px;
   max-width: 880px;
+}
+
+@media screen and (max-width: 670px) {
+  .header {
+    padding-top: 28px;
+    padding-left: 27px;
+    height: 56px;
+  } 
 }
