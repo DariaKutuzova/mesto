@@ -20,3 +20,10 @@
 @import url(../blocks/element/__like/element__like.css);
 @import url(../blocks/element/__caption/element__caption.css);
 @import url(../blocks/profile/__name-and-change/profile__name-and-change.css);
+@import url(../blocks/pop/pop.css);
+@import url(../blocks/pop/__form/pop__form.css);
+@import url(../blocks/pop/__close/pop__close.css);
+@import url(../blocks/pop/__form-header/pop__form-header.css);
+@import url(../blocks/pop/__input/pop__input.css);
+@import url(../blocks/pop/__form-save/pop__form-save.css);
+
