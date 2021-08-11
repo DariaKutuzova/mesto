@@ -8,4 +8,14 @@
   border: 0;
   padding: 0;
   background-color: #fff;
+  cursor: pointer;
+}
+
+.element__like:hover {
+  opacity: 50%;
+}
+
+.element__like:active {
+  background-image: url(../../../images/Union.svg);
+  opacity: 1;
 }

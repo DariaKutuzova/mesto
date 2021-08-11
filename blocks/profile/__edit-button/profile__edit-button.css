@@ -10,6 +10,11 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+  cursor: pointer;
+}
+
+.profile__edit-button:hover {
+  opacity: 60%;
 }
 
 @media screen and (max-width: 670px) {
