@@ -1,10 +1,10 @@
 @import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/page/__item/page__item.css);
 @import url(../blocks/footer/__copy/footer__copy.css);
-@import url(../blocks/footer/footer.css
-);
+@import url(../blocks/footer/footer.css);
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__info/profile__info.css);
@@ -18,3 +18,4 @@
 @import url(../blocks/element/__description/element__description.css);
 @import url(../blocks/element/__like/element__like.css);
 @import url(../blocks/element/__caption/element__caption.css);
+@import url(../blocks/profile/__name-and-change/profile__name-and-change.css);
