@@ -1,15 +1,13 @@
 .profile__info {
   display: flex;
   flex-direction: column;
-  position: absolute;
   left: 150px;
   top: 62px;
   max-width: 336px;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 700px) {
   .profile__info {
-    position: static;
     margin-top: 26px;
 
   } 

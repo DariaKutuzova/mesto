@@ -2,15 +2,16 @@
   padding-top: 40px;
   max-width: 880px;
   min-height: 120px;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
+  grid-template-columns: 120px auto 150px;
+  gap: 30px;
 
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 700px) {
   .profile {
+    display: flex;
     flex-direction: column;
     min-height: 286px;
     padding-top: 42px;
