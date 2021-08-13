@@ -1,4 +1,4 @@
-.pop__input {
+.popup__input {
   max-width: 358px;
   padding: 0;
   border: 0;
@@ -9,12 +9,12 @@
   line-height: 17px;
 }
 
-.pop__input:last-of-type{
+.popup__input:last-of-type{
   margin-top: 30px;
 }
 
 @media screen and (max-width: 600px) {
-  .pop__input {
+  .popup__input {
     margin-top: 75px;
     max-width: 238px;
   } 

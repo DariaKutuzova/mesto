@@ -21,12 +21,12 @@
         <div class="profile__info">
           <div class="profile__name-and-change">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button">
+            <button class="profile__edit-button" type="button">
             </button>
           </div>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
         </button>
       </section>
 
@@ -75,13 +75,13 @@
         </figure>
 
       </section>
-      <section class="pop">
-        <form action="" class="pop__form">
-          <h2 class="pop__form-header">Редактировать профиль</h2>
-          <input type="text" placeholder="Имя Фамилия" class="pop__input">
-          <input type="text" placeholder="Род деятельности" class="pop__input">
-          <button class="pop__form-save">Сохранить</button>
-          <button class="pop__close"></button>
+      <section class="popup">
+        <form action="" class="popup__container" name="form">
+          <h2 class="popup__form-header">Редактировать профиль</h2>
+          <input type="text" placeholder="Имя Фамилия" class="popup__input">
+          <input type="text" placeholder="Род деятельности" class="popup__input">
+          <button class="popup__form-save" type="submit">Сохранить</button>
+          <button class="popup__close" type="button"></button>
         </form>
       </section>
     </main>
@@ -90,6 +90,7 @@
 
     </footer>
   </div>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

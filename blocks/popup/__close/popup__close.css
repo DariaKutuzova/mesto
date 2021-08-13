@@ -1,4 +1,4 @@
-.pop__close {
+.popup__close {
   background-image: url(../../../images/Close\ Icon.svg);
   background-color: #000;
   border: 0;
@@ -14,12 +14,12 @@
   cursor: pointer;
 }
 
-.pop__close:hover {
+.popup__close:hover {
   opacity: 60%;
 }
 
 @media screen and (max-width: 600px) {
-  .pop__close {
+  .popup__close {
     width: 20px;
     height: 20px;
     right: 0px;
