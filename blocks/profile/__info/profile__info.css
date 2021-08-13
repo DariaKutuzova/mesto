@@ -1,7 +1,5 @@
 .profile__info {
   display: flex;
-  /* grid-template-columns: repeat(2, minmax(min-content, max-content));
-  gap: 16px 18px; */
   flex-direction: column;
   position: absolute;
   left: 150px;
