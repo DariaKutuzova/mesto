@@ -20,4 +20,4 @@
 - Дописать все вендорные префиксы
 
 ## Ссылка на проект на GH Pages
-https://dariakutuzova.github.io/russian-travel/
+https://dariakutuzova.github.io/mesto/
