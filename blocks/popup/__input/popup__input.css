@@ -4,9 +4,10 @@
   border: 0;
   border-bottom: 1px solid rgba(00, 00, 00, 0.2);
   margin-top: 54px;
-  font-weight: 400px;
+  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  padding-bottom: 9px;
 }
 
 .popup__input:last-of-type{

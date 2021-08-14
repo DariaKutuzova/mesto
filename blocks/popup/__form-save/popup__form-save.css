@@ -15,7 +15,7 @@
 }
 
 .popup__form-save:hover {
-  opacity: 60%;
+  opacity: 80%;
 }
 
 @media screen and (max-width: 600px) {
