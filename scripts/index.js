@@ -10,11 +10,9 @@ let pageJob = document.querySelector('.profile__description');
 
 // Функция подтягивания значений со страницы в форму при открытии
 function valuePopup() {
-  if (popup.classList.contains('popup_opened')) {
     nameInput.value = pageName.textContent;
     jobInput.value = pageJob.textContent;
   }
-}
 
 // Функция открытия/закрытия попапа
 function openClose() {
