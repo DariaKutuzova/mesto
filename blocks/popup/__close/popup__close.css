@@ -12,6 +12,7 @@
   height: 32px;
   opacity: 1;
   cursor: pointer;
+  transition: opacity 0.2s linear;
 }
 
 .popup__close:hover {
