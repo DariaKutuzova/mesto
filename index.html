@@ -30,7 +30,7 @@
       </section>
 
       <section class="elements page__item" aria-label="Фотогалерея">
-        <article class="element">
+        <!-- <article class="element">
           <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Крепость" class="element__image">
           <div class="element__caption">
             <h2 class="element__description">Карачаевск</h2>
@@ -77,7 +77,7 @@
             <button class="element__like" type="button" aria-label="Нравится"></button>
             <button class="element__trash" type="button" aria-label="Удалить"></button>
           </div>
-        </article>
+        </article> -->
 
       </section>
       <div class="popup" id="profile-popup">
@@ -103,10 +103,10 @@
           <button class="popup__close" type="button" aria-label="Закрыть"></button>
         </div>
       </div>
-      <div class="popup popup_opened" id="open-image-popup">
+      <div class="popup" id="open-image-popup">
         <div class="popup__open-image">
           <img src="./images/jamie-street-uNNCs5kL70Q-unsplash.jpg" alt="#" class="popup__image">
-          <h2 class="popup__image-title">Щеноча ляляляляля</h2>
+          <h2 class="popup__image-title"></h2>
           <button class="popup__close" type="button" aria-label="Закрыть"></button>
         </div>
       </div>
@@ -115,6 +115,16 @@
     <p class="footer__copy">&copy; 2020 Mesto Russia</p>
   </footer>
   </div>
+  <template id="card-template">
+    <article class="element">
+      <img src="" alt="" class="element__image">
+      <div class="element__caption">
+        <h2 class="element__description"></h2>
+        <button class="element__like" type="button" aria-label="Нравится"></button>
+      </div>
+      <button class="element__trash" type="button" aria-label="Удалить"></button>
+    </article>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 

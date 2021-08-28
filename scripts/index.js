@@ -7,6 +7,59 @@ let nameInput = document.querySelector('.popup__input_value_name');
 let jobInput = document.querySelector('.popup__input_value_job');
 let pageName = document.querySelector('.profile__name');
 let pageJob = document.querySelector('.profile__description');
+const cardsElement = document.querySelector('.elements');
+const nameCard = document.querySelector('.element__description');
+const linkCard = document.querySelector('.element__image');
+const cardTemplate = document.querySelector('#card-template').content;
+
+//Массив картинок, подгружаемых на начальную страницу
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+const addCard = (card) => {
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  cardElement.querySelector('.element__image').src = card.link;
+  cardElement.querySelector('.element__image').alt = card.name;
+  cardElement.querySelector('.element__description').textContent = card.name;
+
+  cardsElement.prepend(cardElement);
+};
+
+const startAddCard = (event) => {
+  event.preventDefault();
+  addCard({
+    name: nameCard,
+    link: linkCard
+  })
+}
+
+//Загружаем карточки на начальную страницу
+initialCards.forEach((card) => {
+  addCard(card);
+})
 
 // Функция подтягивания значений со страницы в форму при открытии
 function valuePopup() {
@@ -38,3 +91,4 @@ formElement.addEventListener('submit', formSubmitHandler);
 openPopupButton.addEventListener('click', togglePopup);
 // Вызываем закрытие попапа по клику
 closePopupButton.addEventListener('click', openClose);
+
