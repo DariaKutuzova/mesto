@@ -22,7 +22,6 @@ const imagePopup = document.querySelector('.popup_type_open-image');
 const closeImage = document.querySelector('.popup__close_type_image');
 const imageInPopup = document.querySelector('.popup__image');
 const descriptionInPopup = document.querySelector('.popup__image-title')
-const image = document.querySelector('.element__image')
 
 
 //Массив картинок, подгружаемых на начальную страницу
