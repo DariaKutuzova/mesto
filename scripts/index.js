@@ -55,31 +55,37 @@ const removeCard = (event) => {
 };
 
 //Добавление карточек при загрузке страницы
-const addCard = (card) => {
+const createCard = (cardData) => {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-  cardElement.querySelector('.element__image').src = card.link;
-  cardElement.querySelector('.element__image').alt = card.name;
-  cardElement.querySelector('.element__description').textContent = card.name;
-//Вызываем функцию открытия попапа с картинкой
+  cardElement.querySelector('.element__image').src = cardData.link;
+  cardElement.querySelector('.element__image').alt = cardData.name;
+  cardElement.querySelector('.element__description').textContent = cardData.name;
+  //Вызываем функцию открытия попапа с картинкой
   cardElement.querySelector('.element__image').addEventListener('click', (event) => {
     imageInPopup.src = event.target.src;
     descriptionInPopup.textContent = event.target.closest('.element').querySelector('.element__description').textContent;
     imageInPopup.alt = event.target.closest('.element').querySelector('.element__description').textContent;
     openPopup(imagePopup);
   });
-//Закрытие попапа с картинкой
+  //Закрытие попапа с картинкой
   buttonCloseImage.addEventListener('click', () => {
     closePopup(imagePopup)
   });
-//Вешаем лайк
+  //Вешаем лайк
   cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
     cardElement.querySelector('.element__like').classList.toggle('element__like_active');
   });
-//Удаляем карточку по корзинке
+  //Удаляем карточку по корзинке
   cardElement.querySelector('.element__trash').addEventListener('click', removeCard);
-
-
-//Добавляем в начало
+ 
+  return cardElement;
+};
+ 
+//Добавление карточек при загрузке страницы
+const addCard = (cardData) => {
+  const cardElement = createCard(cardData);
+ 
+  //Добавляем в начало
   cardsElement.prepend(cardElement);
 };
 
