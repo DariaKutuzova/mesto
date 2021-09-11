@@ -144,8 +144,13 @@ function submitHandlerProfileForm(evt) {
 }
 //Функция закрытия по esc
 function keyHandler(evt) {
+  //Если нажата esc
   if (evt.key==='Escape') {
-    closePopup(popupProfile);}
+    //Закрыть попап
+    popupList.forEach((popup) => {
+    closePopup(popup);
+  })
+}
 }
 
 // Вызываем функцию присвоения по клику на "Сохранить"
@@ -170,10 +175,11 @@ buttonAddPlace.addEventListener('click', () => {
 formAddPlace.addEventListener('submit', startAddCard);
 
 //Закрытие попапа по Esc
-popupList.forEach((popup) => {
-  popup.addEventListener('keydown', keyHandler);
-});
+// popupList.forEach((popup) => {
+//   popup.addEventListener('keydown', keyHandler);
+// });
 
+document.addEventListener('keydown', keyHandler);
 //Закрытие попапа на оверлей
 popupList.forEach((popup) => {
   popup.addEventListener('mousedown', () => {
