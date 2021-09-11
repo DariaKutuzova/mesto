@@ -6,6 +6,7 @@ const formChangeProfile = document.querySelector('.popup__form_type_prifile');
 const nameInput = document.querySelector('.popup__input_value_name');
 const jobInput = document.querySelector('.popup__input_value_job');
 const pageName = document.querySelector('.profile__name');
+const pageJob = document.querySelector('.profile__description');
 const cardsElement = document.querySelector('.elements');
 const nameCard = document.querySelector('.element__description');
 const linkCard = document.querySelector('.element__image');
@@ -20,8 +21,16 @@ const like = document.querySelector('.element__like');
 const imagePopup = document.querySelector('.popup_type_open-image');
 const buttonCloseImage = document.querySelector('.popup__close_type_image');
 const imageInPopup = document.querySelector('.popup__image');
-const descriptionInPopup = document.querySelector('.popup__image-title')
+const descriptionInPopup = document.querySelector('.popup__image-title');
 
+
+
+//Получим массив попапов
+const popupList = Array.from(document.querySelectorAll('.popup'));
+//Получим массив контейнеров с попапами
+const modal = Array.from(document.querySelectorAll('.popup__container'));
+//Получим массив увеличенных изображений
+const bigPictures = Array.from(document.querySelectorAll('.popup__open-image'));
 
 //Массив картинок, подгружаемых на начальную страницу
 const initialCards = [{
@@ -60,6 +69,7 @@ const createCard = (cardData) => {
   cardElement.querySelector('.element__image').src = cardData.link;
   cardElement.querySelector('.element__image').alt = cardData.name;
   cardElement.querySelector('.element__description').textContent = cardData.name;
+
   //Вызываем функцию открытия попапа с картинкой
   cardElement.querySelector('.element__image').addEventListener('click', (event) => {
     imageInPopup.src = event.target.src;
@@ -132,6 +142,11 @@ function submitHandlerProfileForm(evt) {
   pageJob.textContent = jobInput.value;
   closePopup(popupProfile);
 }
+//Функция закрытия по esc
+function keyHandler(evt) {
+  if (evt.key==='Escape') {
+    closePopup(popupProfile);}
+}
 
 // Вызываем функцию присвоения по клику на "Сохранить"
 formChangeProfile.addEventListener('submit', submitHandlerProfileForm);
@@ -153,3 +168,28 @@ buttonAddPlace.addEventListener('click', () => {
 });
 //Вызываем функцию добавления карточки
 formAddPlace.addEventListener('submit', startAddCard);
+
+//Закрытие попапа по Esc
+popupList.forEach((popup) => {
+  popup.addEventListener('keydown', keyHandler);
+});
+
+//Закрытие попапа на оверлей
+popupList.forEach((popup) => {
+  popup.addEventListener('mousedown', () => {
+    closePopup(popup);}
+    );
+});
+//Отменить всплытие форм(при нажатии на них, они не закрываются)
+modal.forEach((container) => {
+  container.addEventListener('mousedown', (evt) => {
+    evt.stopPropagation();}
+    );
+});
+
+//Отменить всплытие увеличенных изображений(при нажатии на них, они не закрываются)
+bigPictures.forEach((image) => {
+  image.addEventListener('mousedown', (evt) => {
+    evt.stopPropagation();}
+    );
+});
