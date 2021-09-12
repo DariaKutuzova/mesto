@@ -1,55 +1,88 @@
-//Объявление переменных
-
-
-//Функция смены цвета рамки  и показа ошибки невалидного поля
-function showInputError(formElement, formInput, errorMessage) {
-  const inputError = formElement.querySelector(`.${formInput.id}-error`); 
-  formInput.classList.add('popup__input_type_error');
-  inputError.textContent = errorMessage;
-  inputError.classList.add('popup__input-error_active');
+//Функция смены цвета рамки и показа ошибки невалидного поля
+function showInputError(formInput, validationMessage, inputError, inputErrorClass, errorClass) {
+  formInput.classList.add(inputErrorClass);
+  inputError.textContent = validationMessage;
+  inputError.classList.add(errorClass);
 }
 
 //Функция снятия смены цвета рамки  и показа ошибки  невалидного поля
-function hideInputError(formElement, formInput) {
-  const inputError = formElement.querySelector(`.${formInput.id}-error`);
-  formInput.classList.remove('popup__input_type_error');
-  inputError.classList.remove('popup__input-error_active');
+function hideInputError(formInput, inputErrorClass, inputError, errorClass) {
+  formInput.classList.remove(inputErrorClass);
+  inputError.classList.remove(errorClass);
   inputError.textContent = '';
 }
+
 //Функция проверки на валидность одного поля в конкретной форме
-function verifyValid(formElement, formInput) {
+function verifyValid(formElement, formInput, inputErrorClass, errorClass) {
+  const inputError = formElement.querySelector(`#${formInput.id}-error`);
   if (!formInput.validity.valid) {
-    showInputError(formElement, formInput, formInput.validationMessage);
+    showInputError(formElement, formInput, inputErrorClass, errorClass, inputError);
   } else {
-    hideInputError(formElement, formInput);
+    hideInputError(formElement, formInput, inputErrorClass,errorClass, inputError);
   }
 }
 
 //Навешиваем обработчик всем полям внутри формы
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+function setEventListeners(formElement, inputErrorClass, errorClass, inputSelector, submitButtonSelector, inactiveButtonClass) {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+  if (hasNotInputValues(inputList)) {
+    toggleButtonState(formElement, inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
+  }
+  toggleButtonState(inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
   inputList.forEach((formInput) => {
     formInput.addEventListener('input', () => {
-      verifyValid(formElement, formInput);
+      verifyValid(formElement, formInput, inputErrorClass, errorClass);
+      toggleButtonState(formElement, inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
     });
   });
 }
 
 //Вставляем функцию обработчика всех полей на все формы на странице
-function enableValidation() {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
-    setEventListeners(formElement);
+    setEventListeners(formElement, config.inputErrorClass, config.errorClass, config.inputSelector, config.submitButtonSelector, config.inactiveButtonClass);
+  });
+}
+//Функция проверки, что все поля заполнены правильно
+function hasInvalidInput(inputList) {
+  return inputList.some((formInput) => {
+    return !formInput.validity.valid;
   });
 }
 
-enableValidation(); 
+function hasNotInputValues(inputList) {
+  return inputList.every((formInput) => {
+    return formInput.value.lenght===0;
+  });
+}
 
-// enableValidation({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
+//Выключение кнопки
+function disabledSubmitButton(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.add(inactiveButtonClass);
+}
 
-//   inputErrorClass: 'popup__input_type_error',
-//   errorClass: 'popup__error_visible'
-// }); 
+//Включение кнопки
+function enabledSubmitButton(buttonElement, inactiveButtonClass) {
+  buttonElement.classList.remove(inactiveButtonClass);
+}
+
+//Функция переключения кнопки
+function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+  if (hasInvalidInput(inputList) || hasNotInputValues(inputList)) {
+    disabledSubmitButton(buttonElement, inactiveButtonClass);
+  } else {
+    enabledSubmitButton(buttonElement, inactiveButtonClass)
+  }
+}; 
+
+//Вызов функции отслеживаниявалидации всех полей
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}); 
