@@ -16,24 +16,22 @@ function hideInputError(formInput, inputErrorClass, inputError, errorClass) {
 function verifyValid(formElement, formInput, inputErrorClass, errorClass) {
   const inputError = formElement.querySelector(`#${formInput.id}-error`);
   if (!formInput.validity.valid) {
-    showInputError(formElement, formInput, inputErrorClass, errorClass, inputError);
+    showInputError(formInput, inputErrorClass, errorClass, inputError);
   } else {
-    hideInputError(formElement, formInput, inputErrorClass,errorClass, inputError);
+    hideInputError(formInput, inputErrorClass,errorClass, inputError);
   }
 }
 
 //Навешиваем обработчик всем полям внутри формы
 function setEventListeners(formElement, inputErrorClass, errorClass, inputSelector, submitButtonSelector, inactiveButtonClass) {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-  const buttonElement = formElement.querySelector(submitButtonSelector);
-  if (hasNotInputValues(inputList)) {
-    toggleButtonState(formElement, inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
-  }
-  toggleButtonState(inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
+
+  toggleButtonState(formElement, inputList, submitButtonSelector, inactiveButtonClass);
+  
   inputList.forEach((formInput) => {
     formInput.addEventListener('input', () => {
       verifyValid(formElement, formInput, inputErrorClass, errorClass);
-      toggleButtonState(formElement, inputList, buttonElement, submitButtonSelector, inactiveButtonClass);
+      toggleButtonState(formElement, inputList, submitButtonSelector, inactiveButtonClass);
     });
   });
 }
@@ -69,7 +67,8 @@ function enabledSubmitButton(buttonElement, inactiveButtonClass) {
 }
 
 //Функция переключения кнопки
-function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
+function toggleButtonState(inputList, formElement, inactiveButtonClass, submitButtonSelector) {
+  const buttonElement = formElement.querySelector(submitButtonSelector);
   if (hasInvalidInput(inputList) || hasNotInputValues(inputList)) {
     disabledSubmitButton(buttonElement, inactiveButtonClass);
   } else {
