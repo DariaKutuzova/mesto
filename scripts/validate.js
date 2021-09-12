@@ -1,7 +1,7 @@
 //Функция смены цвета рамки и показа ошибки невалидного поля
-function showInputError(formInput, inputError, inputErrorClass, errorClass) {
+function showInputError(formInput, validationMessage, inputError, inputErrorClass, errorClass) {
   formInput.classList.add(inputErrorClass);
-  inputError.textContent = errorMessage;
+  inputError.textContent = validationMessage;
   inputError.classList.add(errorClass);
 }
 
@@ -16,7 +16,7 @@ function hideInputError(formInput, inputErrorClass, inputError, errorClass) {
 function verifyValid(formElement, formInput, inputErrorClass, errorClass) {
   const inputError = formElement.querySelector(`#${formInput.id}-error`);
   if (!formInput.validity.valid) {
-    showInputError(formInput, inputError, inputErrorClass, errorClass);
+    showInputError(formInput, formInput.validationMessage, inputError, inputErrorClass, errorClass);
   } else {
     hideInputError(formInput, inputErrorClass, inputError, errorClass);
   }
