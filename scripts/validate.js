@@ -1,7 +1,7 @@
 //Функция смены цвета рамки и показа ошибки невалидного поля
-function showInputError(formInput, validationMessage, inputError, inputErrorClass, errorClass) {
+function showInputError(formInput, inputError, inputErrorClass, errorClass) {
   formInput.classList.add(inputErrorClass);
-  inputError.textContent = validationMessage;
+  inputError.textContent = errorMessage;
   inputError.classList.add(errorClass);
 }
 
@@ -16,9 +16,9 @@ function hideInputError(formInput, inputErrorClass, inputError, errorClass) {
 function verifyValid(formElement, formInput, inputErrorClass, errorClass) {
   const inputError = formElement.querySelector(`#${formInput.id}-error`);
   if (!formInput.validity.valid) {
-    showInputError(formInput, inputErrorClass, errorClass, inputError);
+    showInputError(formInput, inputError, inputErrorClass, errorClass);
   } else {
-    hideInputError(formInput, inputErrorClass,errorClass, inputError);
+    hideInputError(formInput, inputErrorClass, inputError, errorClass);
   }
 }
 
@@ -26,12 +26,12 @@ function verifyValid(formElement, formInput, inputErrorClass, errorClass) {
 function setEventListeners(formElement, inputErrorClass, errorClass, inputSelector, submitButtonSelector, inactiveButtonClass) {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
 
-  toggleButtonState(formElement, inputList, submitButtonSelector, inactiveButtonClass);
+  toggleButtonState(inputList, formElement, inactiveButtonClass, submitButtonSelector);
   
   inputList.forEach((formInput) => {
     formInput.addEventListener('input', () => {
       verifyValid(formElement, formInput, inputErrorClass, errorClass);
-      toggleButtonState(formElement, inputList, submitButtonSelector, inactiveButtonClass);
+      toggleButtonState(inputList, formElement, inactiveButtonClass,submitButtonSelector);
     });
   });
 }
@@ -74,7 +74,7 @@ function toggleButtonState(inputList, formElement, inactiveButtonClass, submitBu
   } else {
     enabledSubmitButton(buttonElement, inactiveButtonClass)
   }
-}; 
+}
 
 //Вызов функции отслеживаниявалидации всех полей
 enableValidation({
