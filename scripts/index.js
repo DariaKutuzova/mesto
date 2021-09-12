@@ -87,14 +87,14 @@ const createCard = (cardData) => {
   });
   //Удаляем карточку по корзинке
   cardElement.querySelector('.element__trash').addEventListener('click', removeCard);
- 
+
   return cardElement;
 };
- 
+
 //Добавление карточек при загрузке страницы
 const addCard = (cardData) => {
   const cardElement = createCard(cardData);
- 
+
   //Добавляем в начало
   cardsElement.prepend(cardElement);
 };
@@ -145,12 +145,14 @@ function submitHandlerProfileForm(evt) {
 //Функция закрытия по esc
 function keyHandler(evt) {
   //Если нажата esc
-  if (evt.key==='Escape') {
+  if (evt.key === 'Escape') {
     //Закрыть попап
     popupList.forEach((popup) => {
-    closePopup(popup);
-  })
-}
+      closePopup(popup);
+    })
+    //Снимаем обработчик
+    evt.target.removeEventListener('click', keyHandler);
+  }
 }
 
 // Вызываем функцию присвоения по клику на "Сохранить"
@@ -173,29 +175,24 @@ buttonAddPlace.addEventListener('click', () => {
 });
 //Вызываем функцию добавления карточки
 formAddPlace.addEventListener('submit', startAddCard);
-
-//Закрытие попапа по Esc
-// popupList.forEach((popup) => {
-//   popup.addEventListener('keydown', keyHandler);
-// });
-
+//Закрытие попапа на esc
 document.addEventListener('keydown', keyHandler);
 //Закрытие попапа на оверлей
 popupList.forEach((popup) => {
   popup.addEventListener('mousedown', () => {
-    closePopup(popup);}
-    );
+    closePopup(popup);
+  });
 });
 //Отменить всплытие форм(при нажатии на них, они не закрываются)
 modal.forEach((container) => {
   container.addEventListener('mousedown', (evt) => {
-    evt.stopPropagation();}
-    );
+    evt.stopPropagation();
+  });
 });
 
 //Отменить всплытие увеличенных изображений(при нажатии на них, они не закрываются)
 bigPictures.forEach((image) => {
   image.addEventListener('mousedown', (evt) => {
-    evt.stopPropagation();}
-    );
+    evt.stopPropagation();
+  });
 });
