@@ -52,7 +52,7 @@ function hasInvalidInput(inputList) {
 
 function hasNotInputValues(inputList) {
   return inputList.every((formInput) => {
-    return formInput.value.lenght===0;
+    return formInput.value.length===0;
   });
 }
 
