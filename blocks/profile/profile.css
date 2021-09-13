@@ -9,8 +9,17 @@
 
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 910px) {
   .profile {
+    padding-right: 27px;
+    padding-left: 27px;
+  } 
+}
+
+@media screen and (max-width: 730px) {
+  .profile {
+    padding-right: 0;
+    padding-left: 0;
     gap: 0;
     display: flex;
     flex-direction: column;
