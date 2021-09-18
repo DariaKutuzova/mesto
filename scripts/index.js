@@ -23,6 +23,7 @@ const buttonCloseImage = document.querySelector('.popup__close_type_image');
 const imageInPopup = document.querySelector('.popup__image');
 const descriptionInPopup = document.querySelector('.popup__image-title');
 const bigPicture = document.querySelector('.popup__open-image');
+const popupSubmitButton = document.querySelector('.popup__button_type_add');
 
 //Получим массив попапов
 const popupList = Array.from(document.querySelectorAll('.popup'));
@@ -105,6 +106,8 @@ const startAddCard = (event) => {
     link: imageLinkAddPlace.value
   });
   closePopup(popupAddPlace);
+  popupSubmitButton.classList.add('popup__button_disabled');
+  popupSubmitButton.setAttribute('disabled', true);
   formAddPlace.reset();
 }
 
@@ -114,6 +117,10 @@ initialCards.forEach(addCard);
 //Функция открытия поппапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  //Закрытие попапа на esc
+document.addEventListener('keydown', keyHandler);
+//Закрытие попапа на оверлей
+  popup.addEventListener('mousedown', closeOpenedPopup);
 }
 
 // Функция подтягивания значений профиля со страницы в форму при открытии
@@ -129,6 +136,9 @@ function openProfilePopup(popup) {
 //Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  //Снимаем обработчики
+  document.removeEventListener('keydown', keyHandler);
+  popup.removeEventListener('mousedown', closeOpenedPopup);
 }
 
 // Функция присвоения значений из формы на страницу и закрытие попапа
@@ -144,12 +154,14 @@ function keyHandler(evt) {
   //Если нажата esc
   if (evt.key === 'Escape') {
     //Закрыть попап
-    popupList.forEach((popup) => {
-      closePopup(popup);
-    })
-    //Снимаем обработчик
-    evt.target.removeEventListener('click', keyHandler);
+    closeOpenedPopup();
   }
+}
+
+//Функция закрытия открытого в данный момент попапа
+function closeOpenedPopup() {
+  const popupActive = document.querySelector('.popup_opened');
+      closePopup(popupActive);
 }
 
 // Вызываем функцию присвоения по клику на "Сохранить"
@@ -177,16 +189,6 @@ buttonAddPlace.addEventListener('click', () => {
 
 //Вызываем функцию добавления карточки
 formAddPlace.addEventListener('submit', startAddCard);
-
-//Закрытие попапа на esc
-document.addEventListener('keydown', keyHandler);
-
-//Закрытие попапа на оверлей
-popupList.forEach((popup) => {
-  popup.addEventListener('mousedown', () => {
-    closePopup(popup);
-  });
-});
 
 //Отменить всплытие форм(при нажатии на них, они не закрываются)
 modal.forEach((container) => {

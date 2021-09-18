@@ -59,11 +59,13 @@ function hasNotInputValues(inputList) {
 //Выключение кнопки
 function disabledSubmitButton(buttonElement, inactiveButtonClass) {
   buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute('disabled', true);
 }
 
 //Включение кнопки
 function enabledSubmitButton(buttonElement, inactiveButtonClass) {
   buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.removeAttribute('disabled');
 }
 
 //Функция переключения кнопки
