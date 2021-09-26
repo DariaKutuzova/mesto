@@ -220,8 +220,11 @@ const startAddCard = (event) => {
 
   const addCard = (...args) => {
     const card = new Card(...args);
+    // Создаём карточку и возвращаем наружу
+    const cardElement = card.generateCard();
+
     //Добавляем в начало
-    document.querySelector('.elements').prepend(card);
+    document.querySelector('.elements').prepend(cardElement);
   }
 
   addCard({

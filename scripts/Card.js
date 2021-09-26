@@ -65,7 +65,7 @@ export default class Card {
                 evt.target.classList.toggle('element__like_active');
             });
     }
-//Откурытие и закрытие попапа по клику
+  //Открытие и закрытие попапа по клику
     _setEventListeners() {
         this._element
             .querySelector('.element__image')
