@@ -1,4 +1,66 @@
+class FormValidator {
+  constructor(enableValidation, formElement) {
+    enableValidation({
+      formSelector: '.popup__form',
+      inputSelector: '.popup__input',
+      submitButtonSelector: '.popup__button',
+      inactiveButtonClass: 'popup__button_disabled',
+      inputErrorClass: 'popup__input_type_error',
+      errorClass: 'popup__input-error_active'
+    });
+    this._formElement = formElement;
+  }
+  //Функция проверки, что все поля заполнены правильно
+  _hasInvalidInput(inputList) {
+    return inputList.some((formInput) => {
+      return !formInput.validity.valid;
+    });
+  }
+  _hasNotInputValues(inputList) {
+    return inputList.every((formInput) => {
+      return formInput.value.length===0;
+    });
+  }
+  //Функция проверки на валидность одного поля в конкретной форме
+  _verifyValid(formElement, formInput, inputErrorClass, errorClass) {
+    const inputError = formElement.querySelector(`#${formInput.id}-error`);
+    if (!formInput.validity.valid) {
+      showInputError(formInput, formInput.validationMessage, inputError, inputErrorClass, errorClass);
+    } else {
+      hideInputError(formInput, inputErrorClass, inputError, errorClass);
+    }
+  }
+  //Выключение кнопки
+  _disabledSubmitButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute('disabled', true);
+  }
+  //Включение кнопки
+  _enabledSubmitButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
+  }
+  //Навешиваем обработчик всем полям внутри формы
+  _setEventListeners(formElement, inputErrorClass, errorClass, inputSelector, submitButtonSelector, inactiveButtonClass) {
+    const inputList = Array.from(formElement.querySelectorAll(inputSelector));
 
+    toggleButtonState(inputList, formElement, inactiveButtonClass, submitButtonSelector);
+
+    inputList.forEach((formInput) => {
+      formInput.addEventListener('input', () => {
+        verifyValid(formElement, formInput, inputErrorClass, errorClass);
+        toggleButtonState(inputList, formElement, inactiveButtonClass,submitButtonSelector);
+      });
+    });
+  }
+  //Вставляем функцию обработчика всех полей на все формы на странице
+  enableValidation(config) {
+    const formList = Array.from(document.querySelectorAll(config.formSelector));
+    formList.forEach((formElement) => {
+      setEventListeners(formElement, config.inputErrorClass, config.errorClass, config.inputSelector, config.submitButtonSelector, config.inactiveButtonClass);
+    });
+  }
+}
 
 
 

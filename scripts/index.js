@@ -31,6 +31,8 @@ const popupSubmitButton = document.querySelector('.popup__button_type_add');
 //Получим массив контейнеров с попапами
 const modal = Array.from(document.querySelectorAll('.popup__container'));
 
+
+
 //Массив картинок, подгружаемых на начальную страницу
 const initialCards = [{
     name: 'Архыз',
@@ -136,6 +138,7 @@ const initialCards = [{
 // }
 
 
+
 initialCards.forEach((item) => {
   // Создадим экземпляр карточки
   const card = new Card(item);
@@ -190,16 +193,42 @@ initialCards.forEach((item) => {
 //   //Добавляем в начало
 //   cardsElement.prepend(cardElement);
 // };
+// const createCard = (...args) => {const card = new Card(...args);
+//   console.log('sdfsdfsdfs');
+// };
+
+
+
+// function createNewCard(data) {
+//   const card = new Card(data);
+//   card.name = descriptionAddPlace.value;
+//   card.link = imageLinkAddPlace.value;
+//
+//   const cardElement = card.generateCard();
+//
+//   // Добавляем в DOM
+//   document.querySelector('.elements').prepend(cardElement);
+//
+// }
 
 //Добавление новой карточки
 const startAddCard = (event) => {
   event.preventDefault();
 
-  const cardElement = addCard({
+
+  // createNewCard();
+
+  const addCard = (...args) => {
+    const card = new Card(...args);
+    //Добавляем в начало
+    document.querySelector('.elements').prepend(card);
+  }
+
+  addCard({
     name: descriptionAddPlace.value,
     link: imageLinkAddPlace.value
   });
-  cardsElement.prepend(cardElement);
+
   closePopup(popupAddPlace);
   popupSubmitButton.classList.add('popup__button_disabled');
   popupSubmitButton.setAttribute('disabled', true);
