@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 //Функция смены цвета рамки и показа ошибки невалидного поля
 function showInputError(formInput, validationMessage, inputError, inputErrorClass, errorClass) {
   formInput.classList.add(inputErrorClass);
