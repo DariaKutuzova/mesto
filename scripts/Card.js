@@ -1,32 +1,31 @@
-
-const imagePopup = document.querySelector('.popup_type_open-image');
-const buttonCloseImage = document.querySelector('.popup__close_type_image');
-const imageInPopup = document.querySelector('.popup__image');
-const descriptionInPopup = document.querySelector('.popup__image-title');
+import {handleOpenPopup} from './index.js';
 
 export default class Card {
-    constructor(data) {
+    constructor(data, cardSelector) {
         this._name = data.name;
         this._link = data.link;
+        this._cardSelector = cardSelector;
+        this._handleOpenPopup = handleOpenPopup;
     }
+
     _getTemplate() {
         // забираем разметку из HTML и клонируем элемент
         const cardElement = document
-            .querySelector('#card-template')
+            .querySelector(this._cardSelector)
             .content
-            .querySelector('.element')
             .cloneNode(true);
 
         // вернём DOM-элемент карточки
         return cardElement;
     }
+
     generateCard() {
         // Запишем разметку в приватное поле _element.
         // Так у других элементов появится доступ к ней.
         this._element = this._getTemplate();
         this._setEventListeners();
-        this._deleteCard();
-        this._like();
+        // this._deleteCard();
+        // this._like();
 
 
         // Добавим данные
@@ -37,44 +36,35 @@ export default class Card {
         // Вернём элемент наружу
         return this._element;
     }
-    //Открытие попапа
-    _handleOpenPopup() {
-        imageInPopup.src = this._link;
-        descriptionInPopup.textContent = this._name;
-        imagePopup.classList.add('popup_opened');
-    }
-    //Закрытие попапа
-    _handleClosePopup() {
-        imageInPopup.src = '';
-        descriptionInPopup.textContent = '';
-        imagePopup.classList.remove('popup_opened');
-    }
+
     //Удаление карточки
-    _deleteCard() {
-        this._element
-            .querySelector('.element__trash')
-            .addEventListener('click', (event) => {
-                event.target.closest('.element').remove();
-            });
+    _deleteCard(event) {
+        event.target.closest('.element').remove()
     }
+
     //Лайк
-    _like() {
-        this._element
-            .querySelector('.element__like')
-            .addEventListener('click', function (evt) {
-                evt.target.classList.toggle('element__like_active');
-            });
+    _like(event) {
+    event.target.classList.toggle('element__like_active');
     }
-  //Открытие и закрытие попапа по клику
+
+    //Слушатели
     _setEventListeners() {
+        //Открытие попапа  с картинкой
         this._element
             .querySelector('.element__image')
             .addEventListener('click', () => {
-                this._handleOpenPopup();
+                this._handleOpenPopup(this._name, this._link);
             });
-        buttonCloseImage.addEventListener('click', () => {
-            this._handleClosePopup();
-        });
+        //Лайк
+        this._element
+            .querySelector('.element__like')
+            .addEventListener('click',
+            this._like);
+        //Удаление
+        this._element
+            .querySelector('.element__trash')
+            .addEventListener('click',
+                this._deleteCard);
 
     }
 }
