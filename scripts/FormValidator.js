@@ -37,7 +37,6 @@ export default class FormValidator {
 
     //Функция проверки на валидность одного поля в конкретной форме
     _verifyValid(formInput) {
-        this._inputError = this._formElement.querySelector(`#${this._configValidation.inputSelector.id}-error`);
         if (!formInput.validity.valid) {
             this._showInputError(formInput, formInput.validationMessage);
         } else {
@@ -64,6 +63,14 @@ export default class FormValidator {
         } else {
             this._enabledSubmitButton()
         }
+    }
+    //Сброс кнопки и ошибок инпутов
+    resetValidation() {
+        this._toggleButtonState();
+    //Очищаем поля ошибок
+        this._inputList.forEach((formInput) => {
+            this._hideInputError(formInput)
+        });
     }
 
     //Навешиваем обработчик всем полям внутри формы

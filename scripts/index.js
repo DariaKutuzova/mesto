@@ -2,7 +2,6 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 // Объявляем переменные
 const buttonChangeProfile = document.querySelector('.profile__edit-button');
-const buttonCloseProfile = document.querySelector('.popup__close_type_profile');
 const popupProfile = document.querySelector('.popup_type_profile');
 const formChangeProfile = document.querySelector('.popup__form_type_prifile');
 const nameInput = document.querySelector('.popup__input_value_name');
@@ -11,20 +10,16 @@ const pageName = document.querySelector('.profile__name');
 const pageJob = document.querySelector('.profile__description');
 const buttonAddPlace = document.querySelector('.profile__add-button');
 const popupAddPlace = document.querySelector('.popup_type_add-place');
-const buttonCloseAddPlace = document.querySelector('.popup__close_type_add');
 const imageLinkAddPlace = document.querySelector('.popup__input_value_link');
 const descriptionAddPlace = document.querySelector('.popup__input_value_place');
 const formAddPlace = document.querySelector('.popup__form_type_add');
-// const like = document.querySelector('.element__like');
 const imagePopup = document.querySelector('.popup_type_open-image');
-const buttonCloseImage = document.querySelector('.popup__close_type_image');
 const imageInPopup = document.querySelector('.popup__image');
 const descriptionInPopup = document.querySelector('.popup__image-title');
-const bigPicture = document.querySelector('.popup__open-image');
-const popupSubmitButton = document.querySelector('.popup__button_type_add');
+const cardsContainer = document.querySelector('.elements');
 
-//Получим массив контейнеров с попапами
-const modal = Array.from(document.querySelectorAll('.popup__container'));
+const popups = document.querySelectorAll('.popup');
+
 
 //Объект настроек формы
 export const configValidation = {
@@ -77,11 +72,8 @@ function createCard(card) {
 
 //Добавляем карточки на начальную страницу
 initialCards.forEach((item) => {
-    // Создадим экземпляр карточки
-    createCard(item);
-
     // Добавляем в DOM
-    document.querySelector('.elements').prepend(createCard(item));
+    cardsContainer.prepend(createCard(item));
 });
 
 //Добавление новой карточки
@@ -96,12 +88,10 @@ const startAddCard = (event) => {
     createCard(newCard);
 
     //Добавляем в начало
-    document.querySelector('.elements').prepend(createCard(newCard));
-
+    cardsContainer.prepend(createCard(newCard));
     closePopup(popupAddPlace);
-    popupSubmitButton.classList.add('popup__button_disabled');
-    popupSubmitButton.setAttribute('disabled', true);
     formAddPlace.reset();
+    validationAddForm.resetValidation();
 }
 
 //Функция открытия поппапа
@@ -109,8 +99,6 @@ function openPopup(popup) {
     popup.classList.add('popup_opened');
     //Закрытие попапа на esc
     document.addEventListener('keydown', keyHandler);
-//Закрытие попапа на оверлей
-    popup.addEventListener('mousedown', closeOpenedPopup);
 }
 
 // Функция подтягивания значений профиля со страницы в форму при открытии
@@ -129,7 +117,6 @@ function closePopup(popup) {
     popup.classList.remove('popup_opened');
     //Снимаем обработчики
     document.removeEventListener('keydown', keyHandler);
-    popup.removeEventListener('mousedown', closeOpenedPopup);
 }
 
 // Функция присвоения значений из формы на страницу и закрытие попапа
@@ -160,43 +147,30 @@ formChangeProfile.addEventListener('submit', submitHandlerProfileForm);
 
 // Вызываем функцию открытия попапа профиля по клику
 buttonChangeProfile.addEventListener('click', () => {
-    openProfilePopup(popupProfile)
+    openProfilePopup(popupProfile);
+    validationProfileForm.resetValidation(popupProfile);
 });
 
-// Вызываем закрытие попапа профиля по крестику
-buttonCloseProfile.addEventListener('click', () => {
-    closeOpenedPopup()
-});
-
-// Вызываем закрытие попапа добавления по крестику
-buttonCloseAddPlace.addEventListener('click', () => {
-    closeOpenedPopup()
-});
-
-// Вызываем закрытие попапа с картинкой по крестику
-buttonCloseImage.addEventListener('click', () => {
-    closeOpenedPopup()
-});
+//Закрытие попапа по оверлею и по крестику
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__close')) {
+            closePopup(popup)
+        }
+    })
+})
 
 //Вызываем функцию открытия попапа добавления по клику
 buttonAddPlace.addEventListener('click', () => {
-    openPopup(popupAddPlace)
+    openPopup(popupAddPlace);
+    validationAddForm.resetValidation(popupProfile);
 });
 
 //Вызываем функцию добавления карточки
 formAddPlace.addEventListener('submit', startAddCard);
-
-//Отменить всплытие форм(при нажатии на них, они не закрываются)
-modal.forEach((container) => {
-    container.addEventListener('mousedown', (evt) => {
-        evt.stopPropagation();
-    });
-});
-
-//Отменить всплытие увеличенных изображений(при нажатии на них, они не закрываются)
-bigPicture.addEventListener('mousedown', (evt) => {
-    evt.stopPropagation();
-});
 
 //Функция открытия попапа с картинкой
 export function handleOpenPopup(name, link) {

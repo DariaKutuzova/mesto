@@ -24,8 +24,6 @@ export default class Card {
         // Так у других элементов появится доступ к ней.
         this._element = this._getTemplate();
         this._setEventListeners();
-        // this._deleteCard();
-        // this._like();
 
 
         // Добавим данные
