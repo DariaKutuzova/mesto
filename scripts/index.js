@@ -2,9 +2,9 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 // import Popup from "./Popup.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+// import PopupWithImage from "./PopupWithImage.js";
+// import PopupWithForm from "./PopupWithForm.js";
+// import UserInfo from "./UserInfo.js";
 // Объявляем переменные
 const buttonChangeProfile = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
@@ -18,7 +18,7 @@ const popupAddPlace = document.querySelector('.popup_type_add-place');
 const imageLinkAddPlace = document.querySelector('.popup__input_value_link');
 const descriptionAddPlace = document.querySelector('.popup__input_value_place');
 const formAddPlace = document.querySelector('.popup__form_type_add');
-const imagePopup = document.querySelector('.popup_type_open-image');
+export const imagePopup = document.querySelector('.popup_type_open-image');
 export const imageInPopup = document.querySelector('.popup__image');
 export const descriptionInPopup = document.querySelector('.popup__image-title');
 const cardsContainer = document.querySelector('.elements');
@@ -76,12 +76,6 @@ function createCard(card) {
     return newCard.generateCard();
 }
 
-// //Добавляем карточки на начальную страницу
-// initialCards.forEach((item) => {
-//     // Добавляем в DOM
-//     cardsContainer.prepend(createCard(item));
-// });
-
 //Добавляем карточки на начальную страницу
 const cardList = new Section({
     data: initialCards,
@@ -92,7 +86,6 @@ const cardList = new Section({
         cardList.addItem(cardElement);
     }
 }, cardListSelector);
-
 
 cardList.renderItems();
 
@@ -114,6 +107,10 @@ const startAddCard = (event) => {
     formAddPlace.reset();
     validationAddForm.resetValidation();
 }
+
+
+
+
 
 //Функция открытия поппапа
 function openPopup(popup) {

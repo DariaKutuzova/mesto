@@ -1,4 +1,5 @@
 import {handleOpenPopup} from './index.js';
+import {imagePopup} from './index.js';
 import PopupWithImage from "./PopupWithImage.js";
 
 export default class Card {
@@ -52,7 +53,9 @@ export default class Card {
         this._element
             .querySelector('.element__image')
             .addEventListener('click', () => {
-                this._handleOpenPopup(this._name, this._link);
+                const popupImage = new PopupWithImage(imagePopup);
+
+                popupImage.open(this._name, this._link);
             });
         //Лайк
         this._element
