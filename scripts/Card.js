@@ -1,4 +1,5 @@
 import {handleOpenPopup} from './index.js';
+import PopupWithImage from "./PopupWithImage.js";
 
 export default class Card {
     constructor(data, cardSelector) {

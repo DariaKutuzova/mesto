@@ -1,5 +1,10 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
+// import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 // Объявляем переменные
 const buttonChangeProfile = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
@@ -14,11 +19,12 @@ const imageLinkAddPlace = document.querySelector('.popup__input_value_link');
 const descriptionAddPlace = document.querySelector('.popup__input_value_place');
 const formAddPlace = document.querySelector('.popup__form_type_add');
 const imagePopup = document.querySelector('.popup_type_open-image');
-const imageInPopup = document.querySelector('.popup__image');
-const descriptionInPopup = document.querySelector('.popup__image-title');
+export const imageInPopup = document.querySelector('.popup__image');
+export const descriptionInPopup = document.querySelector('.popup__image-title');
 const cardsContainer = document.querySelector('.elements');
+const cardListSelector = '.elements';
 
-const popups = document.querySelectorAll('.popup');
+export const popups = document.querySelectorAll('.popup');
 
 
 //Объект настроек формы
@@ -70,11 +76,26 @@ function createCard(card) {
     return newCard.generateCard();
 }
 
+// //Добавляем карточки на начальную страницу
+// initialCards.forEach((item) => {
+//     // Добавляем в DOM
+//     cardsContainer.prepend(createCard(item));
+// });
+
 //Добавляем карточки на начальную страницу
-initialCards.forEach((item) => {
-    // Добавляем в DOM
-    cardsContainer.prepend(createCard(item));
-});
+const cardList = new Section({
+    data: initialCards,
+    renderer: (item) => {
+        const newCard = new Card(item, '#card-template');
+        const cardElement = newCard.generateCard();
+
+        cardList.addItem(cardElement);
+    }
+}, cardListSelector);
+
+
+cardList.renderItems();
+
 
 //Добавление новой карточки
 const startAddCard = (event) => {
