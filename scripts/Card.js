@@ -1,8 +1,3 @@
-// import {handleOpenPopup} from './index.js';
-import {imagePopup} from './constants.js';
-import PopupWithImage from "./PopupWithImage.js";
-import Popup from "./Popup.js";
-
 export default class Card {
     constructor(data, cardSelector, {handleCardClick}) {
         this._data = data;
@@ -52,8 +47,9 @@ export default class Card {
         //Открытие попапа  с картинкой
         this._element
             .querySelector('.element__image')
-            .addEventListener('click', this._handleCardClick
-            );
+            .addEventListener('click', () => {
+                this._handleCardClick(this._data);
+            })
         //Лайк
         this._element
             .querySelector('.element__like')

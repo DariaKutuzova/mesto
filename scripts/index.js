@@ -9,8 +9,8 @@ import {
     buttonChangeProfile,
     popupProfile,
     formChangeProfile,
-    // nameInput,
-    // jobInput,
+    nameInput,
+    jobInput,
     // pageName,
     // pageJob,
     buttonAddPlace,
@@ -38,6 +38,17 @@ validationProfileForm.enableValidation();
 const validationAddForm = new FormValidator(configValidation, formAddPlace);
 validationAddForm.enableValidation();
 
+//Создаём инфо пользователя
+const userInfo = new UserInfo({ userNameSelector, userJobSelector });
+
+//Передаем инфо пльзователя со страницы в форму
+const setValuesProfilePopup = () => {
+    const userData = userInfo.getUserInfo();
+    nameInput.value = userData.name;
+    jobInput.value = userData.job;
+    validationProfileForm.resetValidation();
+    popupWithInfoForm.open()
+}
 
 //Функция создания карточки
 function createCard(card) {
@@ -64,23 +75,23 @@ const cardList = new Section({
 cardList.renderItems();
 
 
-//Добавление новой карточки
-const startAddCard = (event) => {
-    event.preventDefault();
-
-    const newCard = {
-        name: descriptionAddPlace.value,
-        link: imageLinkAddPlace.value
-    };
-
-    createCard(newCard);
-
-    //Добавляем в начало
-    cardsContainer.prepend(createCard(newCard));
-    closePopup(popupAddPlace);
-    formAddPlace.reset();
-    validationAddForm.resetValidation();
-}
+// //Добавление новой карточки
+// const startAddCard = (event) => {
+//     event.preventDefault();
+//
+//     const newCard = {
+//         name: descriptionAddPlace.value,
+//         link: imageLinkAddPlace.value
+//     };
+//
+//     createCard(newCard);
+//
+//     //Добавляем в начало
+//     cardsContainer.prepend(createCard(newCard));
+//     closePopup(popupAddPlace);
+//     formAddPlace.reset();
+//     validationAddForm.resetValidation();
+// }
 
 //Экземпляр попапа профиля
 const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
@@ -93,6 +104,7 @@ const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
 //Экземпляр попапа добавления карточки
 const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
     submit: (card) => {
+        //Добавить карточку по сабмиту
         const newCard = new Card(card, '#card-template', {
             handleCardClick: (card) => {
                 const photoPopup = new PopupWithImage(popupPhotoSelector, card);
@@ -131,13 +143,13 @@ const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
 //     document.removeEventListener('keydown', keyHandler);
 // }
 
-// Функция присвоения значений из формы на страницу и закрытие попапа
-function submitHandlerProfileForm(evt) {
-    evt.preventDefault();
-    pageName.textContent = nameInput.value;
-    pageJob.textContent = jobInput.value;
-    closePopup(popupProfile);
-}
+// // Функция присвоения значений из формы на страницу и закрытие попапа
+// function submitHandlerProfileForm(evt) {
+//     evt.preventDefault();
+//     pageName.textContent = nameInput.value;
+//     pageJob.textContent = jobInput.value;
+//     closePopup(popupProfile);
+// }
 
 // //Функция закрытия по esc
 // function keyHandler(evt) {
@@ -154,13 +166,13 @@ function submitHandlerProfileForm(evt) {
 //     closePopup(popupActive);
 // }
 
-// Вызываем функцию присвоения по клику на "Сохранить"
-formChangeProfile.addEventListener('submit', submitHandlerProfileForm);
+// // Вызываем функцию присвоения по клику на "Сохранить"
+// formChangeProfile.addEventListener('submit', () => {
+//     newCard.
+// });
 
 // Вызываем функцию открытия попапа профиля по клику
-buttonChangeProfile.addEventListener('click', () => {
-    popupWithInfoForm.open();
-});
+buttonChangeProfile.addEventListener('click', setValuesProfilePopup);
 
 // //Закрытие попапа по оверлею и по крестику
 // popups.forEach((popup) => {
@@ -179,8 +191,8 @@ buttonAddPlace.addEventListener('click', () => {
     popupAddPlaceForm.open();
 });
 
-//Вызываем функцию добавления карточки
-formAddPlace.addEventListener('submit', startAddCard);
+// //Вызываем функцию добавления карточки
+// formAddPlace.addEventListener('submit', startAddCard);
 
 // //Функция открытия попапа с картинкой
 // export function handleOpenPopup(name, link) {
