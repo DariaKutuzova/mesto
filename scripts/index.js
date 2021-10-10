@@ -2,7 +2,7 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 // import Popup from "./Popup.js";
-// import PopupWithImage from "./PopupWithImage.js";
+import PopupWithImage from "./PopupWithImage.js";
 // import PopupWithForm from "./PopupWithForm.js";
 // import UserInfo from "./UserInfo.js";
 // Объявляем переменные
@@ -22,6 +22,7 @@ export const imagePopup = document.querySelector('.popup_type_open-image');
 export const imageInPopup = document.querySelector('.popup__image');
 export const descriptionInPopup = document.querySelector('.popup__image-title');
 const cardsContainer = document.querySelector('.elements');
+const oneCard = document.querySelector('.element');
 const cardListSelector = '.elements';
 
 export const popups = document.querySelectorAll('.popup');
@@ -70,20 +71,23 @@ const initialCards = [{
     }
 ];
 
+
 //Функция создания карточки
 function createCard(card) {
-    const newCard = new Card(card, '#card-template');
+    const newCard = new Card(card, '#card-template', {
+        handleCardClick: () => {
+            const photoPopup = new PopupWithImage(imagePopup);
+            photoPopup.open(card.link, card.name);
+        }
+})
     return newCard.generateCard();
 }
-
 //Добавляем карточки на начальную страницу
 const cardList = new Section({
     data: initialCards,
     renderer: (item) => {
-        const newCard = new Card(item, '#card-template');
-        const cardElement = newCard.generateCard();
 
-        cardList.addItem(cardElement);
+        cardList.addItem(createCard(item));
     }
 }, cardListSelector);
 
@@ -190,10 +194,10 @@ buttonAddPlace.addEventListener('click', () => {
 //Вызываем функцию добавления карточки
 formAddPlace.addEventListener('submit', startAddCard);
 
-//Функция открытия попапа с картинкой
-export function handleOpenPopup(name, link) {
-    imageInPopup.src = link;
-    descriptionInPopup.textContent = name;
-    imageInPopup.alt = name;
-    openPopup(imagePopup);
-}
+// //Функция открытия попапа с картинкой
+// export function handleOpenPopup(name, link) {
+//     imageInPopup.src = link;
+//     descriptionInPopup.textContent = name;
+//     imageInPopup.alt = name;
+//     openPopup(imagePopup);
+// }

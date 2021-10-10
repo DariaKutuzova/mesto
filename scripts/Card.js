@@ -1,13 +1,14 @@
-import {handleOpenPopup} from './index.js';
+// import {handleOpenPopup} from './index.js';
 import {imagePopup} from './index.js';
 import PopupWithImage from "./PopupWithImage.js";
+import Popup from "./Popup.js";
 
 export default class Card {
-    constructor(data, cardSelector) {
+    constructor(data, cardSelector, {handleCardClick}) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
-        this._handleOpenPopup = handleOpenPopup;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -52,11 +53,8 @@ export default class Card {
         //Открытие попапа  с картинкой
         this._element
             .querySelector('.element__image')
-            .addEventListener('click', () => {
-                const popupImage = new PopupWithImage(imagePopup);
-
-                popupImage.open(this._name, this._link);
-            });
+            .addEventListener('click', this._handleCardClick
+            );
         //Лайк
         this._element
             .querySelector('.element__like')

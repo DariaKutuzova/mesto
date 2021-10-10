@@ -1,3 +1,4 @@
+import Card from "./Card.js";
 export default class Popup{
     constructor(popupSelector) {
         this._popup = popupSelector;
@@ -9,8 +10,13 @@ export default class Popup{
         document.addEventListener('keydown', this._handleEscClose);
     }
 
-    close(){
-        this._popup.classList.remove('popup_opened');
+    close(evt) {
+            if (evt.target.classList.contains('popup_opened')) {
+                this.close()
+            }
+            if (evt.target.classList.contains('popup__close')) {
+                this.close()
+            }
         //Снимаем обработчики
         document.removeEventListener('keydown', this._handleEscClose);
     }
@@ -25,13 +31,6 @@ export default class Popup{
 
     setEventListeners(){
         //Закрытие попапа по оверлею и по крестику
-        this._popup.addEventListener('click', (evt) => {
-            if (evt.target.classList.contains('popup_opened')) {
-                this.close()
-            }
-            if (evt.target.classList.contains('popup__close')) {
-                this.close()
-            }
-        })
+        this._popup.addEventListener('click', close)
     }
 }
