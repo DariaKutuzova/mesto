@@ -38,25 +38,13 @@ validationProfileForm.enableValidation();
 const validationAddForm = new FormValidator(configValidation, formAddPlace);
 validationAddForm.enableValidation();
 
-//Создаём инфо пользователя
-const userInfo = new UserInfo({ userNameSelector, userJobSelector });
-
-//Передаем инфо пльзователя со страницы в форму
-const setValuesProfilePopup = () => {
-    const userData = userInfo.getUserInfo();
-    nameInput.value = userData.name;
-    jobInput.value = userData.job;
-    validationProfileForm.resetValidation();
-    popupWithInfoForm.open()
-}
-
 //Функция создания карточки
 function createCard(card) {
     const newCard = new Card(card, '#card-template', {
         handleCardClick: (card) => {
             const photoPopup = new PopupWithImage(popupPhotoSelector, card);
-            console.log(card.src)
             photoPopup.open();
+            photoPopup.setEventListeners()
         }
 })
     return newCard.generateCard();
@@ -67,12 +55,12 @@ function createCard(card) {
 const cardList = new Section({
     data: initialCards,
     renderer: (item) => {
-
         cardList.addItem(createCard(item));
     }
 }, cardListSelector);
 
 cardList.renderItems();
+
 
 
 // //Добавление новой карточки
@@ -93,13 +81,25 @@ cardList.renderItems();
 //     validationAddForm.resetValidation();
 // }
 
+//Создаём инфо пользователя
+const userInfo = new UserInfo({name: userNameSelector, info: userJobSelector});
+
+//Передаем инфо пльзователя со страницы в форму при открытии
+const setValuesProfilePopup = () => {
+    const userData = userInfo.getUserInfo();
+    nameInput.value = userData.name;
+    jobInput.value = userData.info;
+    validationProfileForm.resetValidation();
+    popupWithInfoForm.open()
+}
+
 //Экземпляр попапа профиля
 const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
     submit: (data) => {
-        const userInfo = new UserInfo({ userNameSelector, userJobSelector });
         userInfo.setUserInfo(data);
     }
-})
+});
+popupWithInfoForm.setEventListeners();
 
 //Экземпляр попапа добавления карточки
 const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
@@ -115,6 +115,8 @@ const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
         cardList.addItem(cardElement, 'prepend');
 }
 })
+
+popupAddPlaceForm.setEventListeners();
 
 
 
