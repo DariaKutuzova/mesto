@@ -2,27 +2,33 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 import PopupWithImage from "./PopupWithImage.js";
-// import PopupWithForm from "./PopupWithForm.js";
-// import UserInfo from "./UserInfo.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 import {
     buttonChangeProfile,
     popupProfile,
     formChangeProfile,
-    nameInput,
-    jobInput,
-    pageName,
-    pageJob,
+    // nameInput,
+    // jobInput,
+    // pageName,
+    // pageJob,
     buttonAddPlace,
     popupAddPlace,
     imageLinkAddPlace,
     descriptionAddPlace,
     formAddPlace,
-    imagePopup,
+    // imagePopup,
     cardsContainer,
     cardListSelector,
-    popups,
+    // popups,
     configValidation,
+    // popupSelector,
+    popupProfileSelector,
+    popupAddPlaceSelector,
+    userNameSelector,
+    userJobSelector,
+    popupPhotoSelector,
     initialCards
 } from './constants.js'
 
@@ -36,13 +42,16 @@ validationAddForm.enableValidation();
 //Функция создания карточки
 function createCard(card) {
     const newCard = new Card(card, '#card-template', {
-        handleCardClick: () => {
-            const photoPopup = new PopupWithImage(imagePopup);
-            photoPopup.open(card.link, card.name);
+        handleCardClick: (card) => {
+            const photoPopup = new PopupWithImage(popupPhotoSelector, card);
+            console.log(card.src)
+            photoPopup.open();
         }
 })
     return newCard.generateCard();
 }
+
+
 //Добавляем карточки на начальную страницу
 const cardList = new Section({
     data: initialCards,
@@ -73,34 +82,54 @@ const startAddCard = (event) => {
     validationAddForm.resetValidation();
 }
 
+//Экземпляр попапа профиля
+const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
+    submit: (data) => {
+        const userInfo = new UserInfo({ userNameSelector, userJobSelector });
+        userInfo.setUserInfo(data);
+    }
+})
 
-
-
-
-//Функция открытия поппапа
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    //Закрытие попапа на esc
-    document.addEventListener('keydown', keyHandler);
+//Экземпляр попапа добавления карточки
+const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
+    submit: (card) => {
+        const newCard = new Card(card, '#card-template', {
+            handleCardClick: (card) => {
+                const photoPopup = new PopupWithImage(popupPhotoSelector, card);
+                photoPopup.open();
+            }
+        })
+        const cardElement = newCard.generateCard();
+        cardList.addItem(cardElement, 'prepend');
 }
+})
 
-// Функция подтягивания значений профиля со страницы в форму при открытии
-function setValuesProfilePopup() {
-    nameInput.value = pageName.textContent;
-    jobInput.value = pageJob.textContent;
-}
 
-function openProfilePopup(popup) {
-    openPopup(popup);
-    setValuesProfilePopup();
-}
 
-//Функция закрытия попапа
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    //Снимаем обработчики
-    document.removeEventListener('keydown', keyHandler);
-}
+// //Функция открытия поппапа
+// function openPopup(popup) {
+//     popup.classList.add('popup_opened');
+//     //Закрытие попапа на esc
+//     document.addEventListener('keydown', keyHandler);
+// }
+
+// // Функция подтягивания значений профиля со страницы в форму при открытии
+// function setValuesProfilePopup() {
+//     nameInput.value = pageName.textContent;
+//     jobInput.value = pageJob.textContent;
+// }
+
+// function openProfilePopup(popup) {
+//     openPopup(popup);
+//     setValuesProfilePopup();
+// }
+
+// //Функция закрытия попапа
+// function closePopup(popup) {
+//     popup.classList.remove('popup_opened');
+//     //Снимаем обработчики
+//     document.removeEventListener('keydown', keyHandler);
+// }
 
 // Функция присвоения значений из формы на страницу и закрытие попапа
 function submitHandlerProfileForm(evt) {
@@ -110,46 +139,44 @@ function submitHandlerProfileForm(evt) {
     closePopup(popupProfile);
 }
 
-//Функция закрытия по esc
-function keyHandler(evt) {
-    //Если нажата esc
-    if (evt.key === 'Escape') {
-        //Закрыть попап
-        closeOpenedPopup();
-    }
-}
+// //Функция закрытия по esc
+// function keyHandler(evt) {
+//     //Если нажата esc
+//     if (evt.key === 'Escape') {
+//         //Закрыть попап
+//         closeOpenedPopup();
+//     }
+// }
 
-//Функция закрытия открытого в данный момент попапа
-function closeOpenedPopup() {
-    const popupActive = document.querySelector('.popup_opened');
-    closePopup(popupActive);
-}
+// //Функция закрытия открытого в данный момент попапа
+// function closeOpenedPopup() {
+//     const popupActive = document.querySelector('.popup_opened');
+//     closePopup(popupActive);
+// }
 
 // Вызываем функцию присвоения по клику на "Сохранить"
 formChangeProfile.addEventListener('submit', submitHandlerProfileForm);
 
 // Вызываем функцию открытия попапа профиля по клику
 buttonChangeProfile.addEventListener('click', () => {
-    openProfilePopup(popupProfile);
-    validationProfileForm.resetValidation(popupProfile);
+    popupWithInfoForm.open();
 });
 
-//Закрытие попапа по оверлею и по крестику
-popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__close')) {
-            closePopup(popup)
-        }
-    })
-})
+// //Закрытие попапа по оверлею и по крестику
+// popups.forEach((popup) => {
+//     popup.addEventListener('click', (evt) => {
+//         if (evt.target.classList.contains('popup_opened')) {
+//             closePopup(popup)
+//         }
+//         if (evt.target.classList.contains('popup__close')) {
+//             closePopup(popup)
+//         }
+//     })
+// })
 
 //Вызываем функцию открытия попапа добавления по клику
 buttonAddPlace.addEventListener('click', () => {
-    openPopup(popupAddPlace);
-    validationAddForm.resetValidation(popupProfile);
+    popupAddPlaceForm.open();
 });
 
 //Вызываем функцию добавления карточки

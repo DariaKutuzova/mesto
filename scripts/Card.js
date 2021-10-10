@@ -5,8 +5,7 @@ import Popup from "./Popup.js";
 
 export default class Card {
     constructor(data, cardSelector, {handleCardClick}) {
-        this._name = data.name;
-        this._link = data.link;
+        this._data = data;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
     }
@@ -30,9 +29,9 @@ export default class Card {
 
 
         // Добавим данные
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__image').alt = this._name;
-        this._element.querySelector('.element__description').textContent = this._name;
+        this._element.querySelector('.element__image').src = this._data.link;
+        this._element.querySelector('.element__image').alt = this._data.name;
+        this._element.querySelector('.element__description').textContent = this._data.name;
 
         // Вернём элемент наружу
         return this._element;

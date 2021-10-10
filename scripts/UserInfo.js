@@ -4,7 +4,17 @@ export default class UserInfo{
         this._name = name;
         this._info = info;
     }
-    getUserInfo(){}
+    getUserInfo(){
+        const data = {
+            name: document.querySelector(this._name).textContent,
+            info: document.querySelector(this._info).textContent
+        }
 
-    setUserInfo(){}
+        return data;
+    }
+
+    setUserInfo(data){
+        this._name.textContent = data.name;
+        this._info.textContent = data.info;
+    }
 }

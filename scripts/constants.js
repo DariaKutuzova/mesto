@@ -17,6 +17,12 @@ export const descriptionInPopup = document.querySelector('.popup__image-title');
 export const cardsContainer = document.querySelector('.elements');
 export const oneCard = document.querySelector('.element');
 export const cardListSelector = '.elements';
+export const popupSelector = '.popup';
+export const popupProfileSelector = '.popup_type_profile';
+export const popupAddPlaceSelector = '.popup_type_add-place';
+export const userNameSelector = '.profile__name';
+export const userJobSelector = '.profile__description';
+export const popupPhotoSelector = '.popup_type_open-image';
 
 export const popups = document.querySelectorAll('.popup');
 
