@@ -9,7 +9,6 @@ export default class UserInfo{
             name: this._userName.textContent,
             info: this._userJob.textContent
         }
-
         return data;
     }
 
