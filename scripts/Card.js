@@ -1,5 +1,5 @@
 // import {handleOpenPopup} from './index.js';
-import {imagePopup} from './index.js';
+import {imagePopup} from './constants.js';
 import PopupWithImage from "./PopupWithImage.js";
 import Popup from "./Popup.js";
 

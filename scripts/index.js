@@ -1,75 +1,36 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
-// import Popup from "./Popup.js";
 import PopupWithImage from "./PopupWithImage.js";
 // import PopupWithForm from "./PopupWithForm.js";
 // import UserInfo from "./UserInfo.js";
-// Объявляем переменные
-const buttonChangeProfile = document.querySelector('.profile__edit-button');
-const popupProfile = document.querySelector('.popup_type_profile');
-const formChangeProfile = document.querySelector('.popup__form_type_prifile');
-const nameInput = document.querySelector('.popup__input_value_name');
-const jobInput = document.querySelector('.popup__input_value_job');
-const pageName = document.querySelector('.profile__name');
-const pageJob = document.querySelector('.profile__description');
-const buttonAddPlace = document.querySelector('.profile__add-button');
-const popupAddPlace = document.querySelector('.popup_type_add-place');
-const imageLinkAddPlace = document.querySelector('.popup__input_value_link');
-const descriptionAddPlace = document.querySelector('.popup__input_value_place');
-const formAddPlace = document.querySelector('.popup__form_type_add');
-export const imagePopup = document.querySelector('.popup_type_open-image');
-export const imageInPopup = document.querySelector('.popup__image');
-export const descriptionInPopup = document.querySelector('.popup__image-title');
-const cardsContainer = document.querySelector('.elements');
-const oneCard = document.querySelector('.element');
-const cardListSelector = '.elements';
 
-export const popups = document.querySelectorAll('.popup');
-
-
-//Объект настроек формы
-export const configValidation = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
-};
+import {
+    buttonChangeProfile,
+    popupProfile,
+    formChangeProfile,
+    nameInput,
+    jobInput,
+    pageName,
+    pageJob,
+    buttonAddPlace,
+    popupAddPlace,
+    imageLinkAddPlace,
+    descriptionAddPlace,
+    formAddPlace,
+    imagePopup,
+    cardsContainer,
+    cardListSelector,
+    popups,
+    configValidation,
+    initialCards
+} from './constants.js'
 
 //Валидация отдельных форм
 const validationProfileForm = new FormValidator(configValidation, formChangeProfile);
 validationProfileForm.enableValidation();
 const validationAddForm = new FormValidator(configValidation, formAddPlace);
 validationAddForm.enableValidation();
-
-//Массив картинок, подгружаемых на начальную страницу
-const initialCards = [{
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
 
 
 //Функция создания карточки
