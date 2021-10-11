@@ -12,7 +12,7 @@ export default class PopupWithForm extends Popup{
         this._form.addEventListener('submit', this._submitEvtHandler);
         super.setEventListeners();
     }
-
+//Собирает данные из инпутов
     _getInputValues() {
         this._inputs = Array.from(this._form.querySelectorAll('.popup__input'));
 
@@ -23,7 +23,7 @@ export default class PopupWithForm extends Popup{
         console.log(formValues)
         return formValues;
     }
-
+//События при сабмите
     _submitEvtHandler(evt) {
         evt.preventDefault();
         this._submit(this._getInputValues());
