@@ -1,36 +1,27 @@
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import './index.css';
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 import {
     buttonChangeProfile,
-    popupProfile,
     formChangeProfile,
     nameInput,
     jobInput,
-    // pageName,
-    // pageJob,
     buttonAddPlace,
-    popupAddPlace,
-    imageLinkAddPlace,
-    descriptionAddPlace,
     formAddPlace,
-    // imagePopup,
-    cardsContainer,
     cardListSelector,
-    // popups,
     configValidation,
-    // popupSelector,
     popupProfileSelector,
     popupAddPlaceSelector,
     userNameSelector,
     userJobSelector,
     popupPhotoSelector,
     initialCards
-} from './constants.js'
+} from '../utils/constants.js'
 
 //Валидация отдельных форм
 const validationProfileForm = new FormValidator(configValidation, formChangeProfile);
