@@ -4,7 +4,7 @@
   "description": "Сайт позволяет делиться фотографиями наподобие Инстаграм.",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --mode production",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "repository": {
