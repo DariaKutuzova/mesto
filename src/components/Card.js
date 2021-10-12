@@ -10,6 +10,7 @@ export default class Card {
         const cardElement = document
             .querySelector(this._cardSelector)
             .content
+            .querySelector('.element')
             .cloneNode(true);
 
         // вернём DOM-элемент карточки
@@ -33,8 +34,8 @@ export default class Card {
     }
 
     //Удаление карточки
-    _deleteCard(event) {
-        event.target.closest('.element').remove()
+    _deleteCard() {
+        this._element.remove();
     }
 
     //Лайк
