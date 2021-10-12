@@ -59,8 +59,9 @@ export default class Card {
         //Удаление
         this._element
             .querySelector('.element__trash')
-            .addEventListener('click',
-                this._deleteCard);
+            .addEventListener('click', () => {
+                this._deleteCard(this._element)
+            })
 
     }
 }
