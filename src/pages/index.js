@@ -74,8 +74,6 @@ popupWithInfoForm.setEventListeners();
 //Экземпляр попапа добавления карточки
 const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
     submit: (card) => {
-        //Добавить карточку по сабмиту
-        createCard(card)
         //Встроить в сетку
         cardList.addItem(createCard(card));
 }
