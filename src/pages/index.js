@@ -8,7 +8,11 @@ import UserInfo from "../components/UserInfo.js";
 
 import {
     buttonChangeProfile,
+    buttonChangeAvatar,
+    buttonDeleteImage,
     formChangeProfile,
+    formChangeAvatar,
+    formDeleteImage,
     nameInput,
     jobInput,
     buttonAddPlace,
@@ -17,6 +21,8 @@ import {
     configValidation,
     popupProfileSelector,
     popupAddPlaceSelector,
+    popupAvatarSelector,
+    popupDeleteImageSelector,
     userNameSelector,
     userJobSelector,
     popupPhotoSelector,
@@ -28,6 +34,8 @@ const validationProfileForm = new FormValidator(configValidation, formChangeProf
 validationProfileForm.enableValidation();
 const validationAddForm = new FormValidator(configValidation, formAddPlace);
 validationAddForm.enableValidation();
+const validationAvatarForm = new FormValidator(configValidation, formChangeAvatar);
+validationAvatarForm.enableValidation();
 
 //Функция создания карточки
 function createCard(data) {
@@ -81,6 +89,26 @@ const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
 
 popupAddPlaceForm.setEventListeners();
 
+//Экземпляр попапа смены аватара
+const popupChangeAvatarForm = new PopupWithForm(popupAvatarSelector, {
+    submit: (card) => {
+        //Встроить в сетку
+        cardList.addItem(createCard(card));
+    }
+})
+
+popupChangeAvatarForm.setEventListeners();
+
+//Экземпляр попапа удаления карточки
+const popupDeleteImage = new PopupWithForm(popupDeleteImageSelector, {
+    submit: (card) => {
+        //Встроить в сетку
+        cardList.addItem(createCard(card));
+    }
+})
+
+popupDeleteImage.setEventListeners();
+
 // Вызываем функцию открытия попапа профиля по клику
 buttonChangeProfile.addEventListener('click', setValuesProfilePopup);
 
@@ -88,5 +116,16 @@ buttonChangeProfile.addEventListener('click', setValuesProfilePopup);
 buttonAddPlace.addEventListener('click', () => {
     validationAddForm.resetValidation();
     popupAddPlaceForm.open();
+});
+
+//Вызываем функцию открытия попапа смены аватара по клику
+buttonChangeAvatar.addEventListener('click', () => {
+    validationAvatarForm.resetValidation();
+    popupChangeAvatarForm.open();
+});
+
+//Вызываем функцию открытия попапа удаления карточки
+buttonDeleteImage.addEventListener('click', () => {
+    popupDeleteImage.open();
 });
 

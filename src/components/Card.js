@@ -1,8 +1,9 @@
 export default class Card {
-    constructor(data, cardSelector, {handleCardClick}) {
+    constructor(data, cardSelector, {handleCardClick, handleDeleteCardClick}) {
         this._data = data;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
+        // this._handleDeleteCardClick = handleDeleteCardClick;
     }
 
     _getTemplate() {
@@ -34,8 +35,13 @@ export default class Card {
     }
 
     //Удаление карточки
-    _deleteCard() {
-        this._element.remove();
+    deleteCard() {
+        this._deleteElem(this._element);
+    }
+
+    _deleteElement(element) {
+        element.remove();
+        element = null;
     }
 
     //Лайк
@@ -59,9 +65,7 @@ export default class Card {
         //Удаление
         this._element
             .querySelector('.element__trash')
-            .addEventListener('click', () => {
-                this._deleteCard()
-            })
+            .addEventListener('click', this._handleDeleteCardClick)
 
     }
 }
