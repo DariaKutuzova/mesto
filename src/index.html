@@ -16,7 +16,10 @@
     </header>
     <main class="content">
       <section class="profile page__item">
-        <img src="<%=require('./images/avatar.jpg')%>" alt="Аватар" class="profile__avatar">
+        <div class="profile__avatar-container">
+          <button class="profile__avatar-edit"></button>
+          <img src="<%=require('./images/avatar.jpg')%>" alt="Аватар" class="profile__avatar">
+        </div>
         <div class="profile__info">
           <div class="profile__container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -63,6 +66,26 @@
           <button class="popup__close popup__close_type_image" type="button" aria-label="Закрыть"></button>
         </div>
       </div>
+      <div class="popup popup_type_confirm">
+        <div class="popup__container popup__container_type_confirm">
+          <form action="#" class="popup__form popup__form_type_confirm" name="confirm-form">
+            <h2 class="popup__form-header">Вы уверены?</h2>
+            <button class="popup__button popup__button_type_confirm" type="submit">Да</button>
+          </form>
+          <button class="popup__close popup__close_type_confirm" type="button" aria-label="Закрыть"></button>
+        </div>
+      </div>
+      <div class="popup popup_type_avatar">
+        <div class="popup__container popup__container_type_avatar">
+          <form action="#" class="popup__form popup__form_type_avatar" name="avatar-form">
+            <h2 class="popup__form-header">Обновить аватар</h2>
+            <input type="url" placeholder="https://somewebsite.com/someimage.jpg" class="popup__input popup__input_value_link popup__input_type_notlast" id="link-input" name="link" required>
+            <span id="link-input-error" class="popup__input-error"></span>
+            <button class="popup__button popup__button_type_avatar" type="submit">Создать</button>
+          </form>
+          <button class="popup__close popup__close_type_add" type="button" aria-label="Закрыть"></button>
+        </div>
+      </div>
   </main>
   <footer class="footer page__item">
     <p class="footer__copy">&copy; 2021 Mesto Russia</p>
@@ -73,7 +96,10 @@
       <img src="#" alt="#" class="element__image">
       <div class="element__caption">
         <h2 class="element__description"></h2>
-        <button class="element__like" type="button" aria-label="Нравится"></button>
+        <div class="element__likes">
+          <button class="element__like" type="button" aria-label="Нравится"></button>
+          <span class="element__number-of-likes">0</span>
+        </div>
       </div>
       <button class="element__trash" type="button" aria-label="Удалить"></button>
     </article>
