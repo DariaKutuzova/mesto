@@ -5,14 +5,15 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js"
 
 import {
     buttonChangeProfile,
     buttonChangeAvatar,
-    buttonDeleteImage,
+    // buttonDeleteImage,
     formChangeProfile,
     formChangeAvatar,
-    formDeleteImage,
+    // formDeleteImage,
     nameInput,
     jobInput,
     buttonAddPlace,
@@ -26,8 +27,10 @@ import {
     userNameSelector,
     userJobSelector,
     popupPhotoSelector,
-    initialCards
+    // initialCards
 } from '../utils/constants.js'
+
+let thisCard = null;
 
 //Валидация отдельных форм
 const validationProfileForm = new FormValidator(configValidation, formChangeProfile);
@@ -40,24 +43,19 @@ validationAvatarForm.enableValidation();
 //Функция создания карточки
 function createCard(data) {
     const handleCardClick = popupWithImage.open.bind(popupWithImage);
+    // const handleDeleteCardClick = popupDeleteImage.open.bind(popupDeleteImage);
     const newCard = new Card(data, '#card-template', {
-        handleCardClick})
+        handleCardClick,
+        handleDeleteCardClick: () => {
+            thisCard = newCard;
+            popupDeleteImage.open(data);
+        },})
     return newCard.generateCard();
 }
 
 //Экземпляр попапа с картинкой
 const popupWithImage = new PopupWithImage(popupPhotoSelector);
 popupWithImage.setEventListeners();
-
-//Добавляем карточки на начальную страницу
-const cardList = new Section({
-    data: initialCards,
-    renderer: (item) => {
-        cardList.addItem(createCard(item));
-    }
-}, cardListSelector);
-
-cardList.renderItems();
 
 //Инфо пользователя
 const userInfo = new UserInfo({name: userNameSelector, info: userJobSelector});
@@ -71,6 +69,7 @@ const setValuesProfilePopup = () => {
     popupWithInfoForm.open()
 }
 
+
 //Экземпляр попапа профиля
 const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
     submit: (data) => {
@@ -82,8 +81,15 @@ popupWithInfoForm.setEventListeners();
 //Экземпляр попапа добавления карточки
 const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
     submit: (card) => {
-        //Встроить в сетку
-        cardList.addItem(createCard(card));
+        api.addCard(card)
+            .then((res) => {
+                const cardList = new Section({
+                    res,
+                    renderer: (item) => {
+                        cardList.addItem(createCard(item));
+                    }
+                }, cardListSelector);
+            })
 }
 })
 
@@ -101,13 +107,37 @@ popupChangeAvatarForm.setEventListeners();
 
 //Экземпляр попапа удаления карточки
 const popupDeleteImage = new PopupWithForm(popupDeleteImageSelector, {
-    submit: (card) => {
-        //Встроить в сетку
-        cardList.addItem(createCard(card));
+    submit: () => {
+        if (true) {
+        thisCard.deleteCard()
+        } else {popupDeleteImage.close()}
     }
 })
 
 popupDeleteImage.setEventListeners();
+
+//Экземпляр API
+const api= new Api({
+    url: "https://mesto.nomoreparties.co/v1/cohort-29/cards/",
+    headers: {
+        "content-type": "application/json",
+        authorization: "8bc97cc4-e8dd-4b97-8e8e-b29acddab317"
+                }
+});
+const allCards = api.getAllCards();
+allCards
+    .then((data) => {
+    //Добавляем карточки на начальную страницу
+    const cardList = new Section({
+        data,
+        renderer: (item) => {
+            cardList.addItem(createCard(item));
+        }
+    }, cardListSelector, api);
+
+    cardList.renderItems();
+})
+    .catch((err) => {alert(err)});
 
 // Вызываем функцию открытия попапа профиля по клику
 buttonChangeProfile.addEventListener('click', setValuesProfilePopup);
@@ -122,10 +152,5 @@ buttonAddPlace.addEventListener('click', () => {
 buttonChangeAvatar.addEventListener('click', () => {
     validationAvatarForm.resetValidation();
     popupChangeAvatarForm.open();
-});
-
-//Вызываем функцию открытия попапа удаления карточки
-buttonDeleteImage.addEventListener('click', () => {
-    popupDeleteImage.open();
 });
 
