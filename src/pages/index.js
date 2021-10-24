@@ -4,6 +4,7 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js"
 
@@ -16,6 +17,8 @@ import {
     // formDeleteImage,
     nameInput,
     jobInput,
+    pageName,
+    pageJob,
     buttonAddPlace,
     formAddPlace,
     cardListSelector,
@@ -27,6 +30,7 @@ import {
     userNameSelector,
     userJobSelector,
     popupPhotoSelector,
+    avatar,
     // initialCards
 } from '../utils/constants.js'
 
@@ -40,10 +44,18 @@ validationAddForm.enableValidation();
 const validationAvatarForm = new FormValidator(configValidation, formChangeAvatar);
 validationAvatarForm.enableValidation();
 
+//Экземпляр API
+const api= new Api({
+    url: "https://mesto.nomoreparties.co/v1/cohort-29/",
+    headers: {
+        "content-type": "application/json",
+        authorization: "8bc97cc4-e8dd-4b97-8e8e-b29acddab317"
+    }
+});
+
 //Функция создания карточки
 function createCard(data) {
     const handleCardClick = popupWithImage.open.bind(popupWithImage);
-    // const handleDeleteCardClick = popupDeleteImage.open.bind(popupDeleteImage);
     const newCard = new Card(data, '#card-template', {
         handleCardClick,
         handleDeleteCardClick: () => {
@@ -60,11 +72,27 @@ popupWithImage.setEventListeners();
 //Инфо пользователя
 const userInfo = new UserInfo({name: userNameSelector, info: userJobSelector});
 
+//Инфо пользователя с сервера на страницу
+const pushInfo = api.getApiUserInfo();
+pushInfo
+    .then((res) => {
+            pageName.textContent = res.name;
+            pageJob.textContent = res.about;
+            avatar.src = res.avatar;
+        })
+
+
+
 //Передаем инфо пользователя со страницы в форму при открытии
 const setValuesProfilePopup = () => {
-    const userData = userInfo.getUserInfo();
-    nameInput.value = userData.name;
-    jobInput.value = userData.info;
+    api.getApiUserInfo()
+        .then((data) => {
+            nameInput.value = data.name;
+            jobInput.value = data.about;
+        })
+    // const userData = userInfo.getUserInfo();
+    // nameInput.value = userData.name;
+    // jobInput.value = userData.info;
     validationProfileForm.resetValidation();
     popupWithInfoForm.open()
 }
@@ -73,7 +101,10 @@ const setValuesProfilePopup = () => {
 //Экземпляр попапа профиля
 const popupWithInfoForm = new PopupWithForm(popupProfileSelector, {
     submit: (data) => {
-        userInfo.setUserInfo(data);
+        api.patchUserInfo(data)
+            .then((res) => {
+                userInfo.setUserInfo(res);
+            })
     }
 });
 popupWithInfoForm.setEventListeners();
@@ -81,6 +112,7 @@ popupWithInfoForm.setEventListeners();
 //Экземпляр попапа добавления карточки
 const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
     submit: (card) => {
+        popupAddPlaceForm.loading(true);
         api.addCard(card)
             .then((res) => {
                 const cardList = new Section({
@@ -90,6 +122,9 @@ const popupAddPlaceForm = new PopupWithForm(popupAddPlaceSelector, {
                     }
                 }, cardListSelector);
             })
+            .catch((err)=>{
+                console.log(err)
+            })
 }
 })
 
@@ -97,33 +132,50 @@ popupAddPlaceForm.setEventListeners();
 
 //Экземпляр попапа смены аватара
 const popupChangeAvatarForm = new PopupWithForm(popupAvatarSelector, {
-    submit: (card) => {
-        //Встроить в сетку
-        cardList.addItem(createCard(card));
+    submit: (link) => {
+        api.changeAvatar(link)
+            .then((data) => {
+                avatar.src = data.link
+            })
     }
 })
 
 popupChangeAvatarForm.setEventListeners();
 
 //Экземпляр попапа удаления карточки
-const popupDeleteImage = new PopupWithForm(popupDeleteImageSelector, {
-    submit: () => {
-        if (true) {
-        thisCard.deleteCard()
-        } else {popupDeleteImage.close()}
+const popupDeleteImage = new PopupWithConfirm(popupDeleteImageSelector, {
+    submit: (card) => {
+        console.log(card);
+    //     api.deleteCard(card.getCardId())
+    //     .then(() => {
+    //         card.deleteElement();
+    //     })
+    //     .catch((err) => {
+    //         console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
+    //     })
+    //     .finally(() => {
+    //         popupDeleteImage.close();
+    //     });
     }
+
 })
 
 popupDeleteImage.setEventListeners();
 
-//Экземпляр API
-const api= new Api({
-    url: "https://mesto.nomoreparties.co/v1/cohort-29/cards/",
-    headers: {
-        "content-type": "application/json",
-        authorization: "8bc97cc4-e8dd-4b97-8e8e-b29acddab317"
-                }
-});
+// // Удаление карточки
+// function deleteThisCard(card) {
+//     api.deleteCard(card.getCardId())
+//         .then(() => {
+//             card.delete();
+//         })
+//         .catch((err) => {
+//             console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
+//         })
+//         .finally(() => {
+//             popupDeleteImage.close();
+//         });
+// }
+
 const allCards = api.getAllCards();
 allCards
     .then((data) => {
@@ -153,4 +205,5 @@ buttonChangeAvatar.addEventListener('click', () => {
     validationAvatarForm.resetValidation();
     popupChangeAvatarForm.open();
 });
+
 

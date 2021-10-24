@@ -15,6 +15,6 @@ export default class UserInfo{
 //Для присвоения из формы на страницу
     setUserInfo(data){
         this._userName.textContent = data.name;
-        this._userJob.textContent = data.info;
+        this._userJob.textContent = data.about;
     }
 }

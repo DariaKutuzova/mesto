@@ -1,9 +1,11 @@
 export default class Card {
-    constructor(data, cardSelector, {handleCardClick, handleDeleteCardClick}) {
+    constructor(data, cardSelector, {handleCardClick, handleDeleteCardClick}, api) {
         this._data = data;
+        this._id = data.id;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
-        // this._handleDeleteCardClick = handleDeleteCardClick;
+        this._handleDeleteCardClick = handleDeleteCardClick;
+        this._api = api;
     }
 
     _getTemplate() {
@@ -35,14 +37,24 @@ export default class Card {
     }
 
     //Удаление карточки
-    deleteCard() {
-        this._deleteElem(this._element);
+    deleteThisCard() {
+        this._delClickHandler(this._element);
     }
 
-    _deleteElement(element) {
+    deleteElement(element) {
         element.remove();
         element = null;
     }
+
+    _delClickHandler = () => {
+        this._api.deleteCard(this._id)
+            .then(() => {
+            this._element.remove();
+        })
+            .catch((err) => console.log(err));
+    }
+
+    getCardId() { return this._id; }
 
     //Лайк
     _like(event) {
