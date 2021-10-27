@@ -228,7 +228,6 @@ const popupDeleteImage = new PopupWithConfirm(popupDeleteImageSelector, {
 
 popupDeleteImage.setEventListeners();
 
-
 const allCards = api.getAllCards();
 allCards
     .then((data) => {

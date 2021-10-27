@@ -25,6 +25,7 @@ export const userAvatarSelector = '.profile__avatar';
 export const popupPhotoSelector = '.popup_type_open-image';
 
 
+
 //Объект настроек формы
 export const configValidation = {
     formSelector: '.popup__form',

@@ -36,8 +36,4 @@ export default class PopupWithConfirm extends Popup{
         this._data = data;
         super.open();
     }
-
-    // setSubmit(submit) {
-    //     this._handleSubmitCallback = submit;
-    // }
 }
