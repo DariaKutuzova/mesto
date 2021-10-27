@@ -123,7 +123,7 @@ const setValuesProfilePopup = () => {
     const userData = userInfo.getUserInfo();
     nameInput.value = userData.name;
     jobInput.value = userData.info;
-    
+
     validationProfileForm.resetValidation();
     popupWithInfoForm.open()
 }
