@@ -6,14 +6,14 @@ export default class Section{
         this._api = api;
     }
 
-    // saveCard(text) {
-    //     this._api
-    //         .addCard({name: text})
-    //         .then((data) => {
-    //             this.addItem(data.link, data.name)
-    //         })
-    //         .catch((err) => {alert(err)});
-    // }
+    saveCard(data) {
+        this._api
+            .addCard(data)
+            .then((data) => {
+                this.addItem(data.link, data.name)
+            })
+            .catch((err) => {alert(err)});
+    }
 
     //Принимает DOM-элемент и добавляет его в контейнер.
     addItem(element) {

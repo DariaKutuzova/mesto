@@ -1,11 +1,14 @@
 export default class Card {
-    constructor(data, cardSelector, {handleCardClick, handleDeleteCardClick}, api) {
+    constructor(data, cardSelector, {handleCardClick, handleDeleteCardClick, plusLike, deleteLike}, ownerId) {
         this._data = data;
-        this._id = data.id;
+        this._id = data._id;
         this._cardSelector = cardSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteCardClick = handleDeleteCardClick;
-        this._api = api;
+        this._plusLike = plusLike;
+        this._deleteLike = deleteLike;
+        this._likes = data.likes.length;
+        this._ownerId = ownerId;
     }
 
     _getTemplate() {
@@ -31,34 +34,47 @@ export default class Card {
         this._element.querySelector('.element__image').src = this._data.link;
         this._element.querySelector('.element__image').alt = this._data.name;
         this._element.querySelector('.element__description').textContent = this._data.name;
+        this._likeCounter = this._element.querySelector('.element__number-of-likes');
+        this._likeButton = this._element.querySelector('.element__like');
+        this._likeCounter.textContent = this._likes;
+        this._checkLikeState();
+        this._checkOwner();
+
 
         // Вернём элемент наружу
         return this._element;
     }
 
-    //Удаление карточки
-    deleteThisCard() {
-        this._delClickHandler(this._element);
+    removeCard() {
+        this._element.remove();
     }
 
-    deleteElement(element) {
-        element.remove();
-        element = null;
+    setLikeCount(data) {
+        this._likeCounter = this._element.querySelector('.element__number-of-likes');
+        this._likeCounter.textContent = String(data.likes.length);
     }
 
-    _delClickHandler = () => {
-        this._api.deleteCard(this._id)
-            .then(() => {
-            this._element.remove();
+    _checkOwner(){
+        if (this._data.owner._id !== this._ownerId) {
+            this._element
+                .querySelector('.element__trash').remove()
+        }
+    }
+
+    _checkLikeState() {
+        this._data.likes.forEach((owner) => {
+            if (owner._id === this._ownerId) {
+                this._likeButton.classList.add('element__like_active');
+            }
         })
-            .catch((err) => console.log(err));
     }
 
-    getCardId() { return this._id; }
+    addLike() {
+        this._likeButton.classList.add('element__like_active');
+    }
 
-    //Лайк
-    _like(event) {
-    event.target.classList.toggle('element__like_active');
+    removeLike() {
+        this._likeButton.classList.remove('element__like_active');
     }
 
     //Слушатели
@@ -73,7 +89,14 @@ export default class Card {
         this._element
             .querySelector('.element__like')
             .addEventListener('click',
-            this._like);
+                () => {
+                if (this._likeButton.classList
+                    .contains('element__like_active')) {
+                    this._deleteLike(this._data);
+                } else {
+                    this._plusLike(this._data);
+                }
+                });
         //Удаление
         this._element
             .querySelector('.element__trash')

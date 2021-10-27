@@ -7,6 +7,7 @@ export default class PopupWithConfirm extends Popup{
         this._submitEvtHandler = this._submitEvtHandler.bind(this);
         this._submitButton = this._form.querySelector('.popup__button');
         this._valueSubmitButton = this._submitButton.textContent;
+        // this._data = data;
 
     }
 
@@ -31,8 +32,12 @@ export default class PopupWithConfirm extends Popup{
         }
 
     }
-    open(card) {
-        this._element = card;
+    open(data) {
+        this._data = data;
         super.open();
     }
+
+    // setSubmit(submit) {
+    //     this._handleSubmitCallback = submit;
+    // }
 }

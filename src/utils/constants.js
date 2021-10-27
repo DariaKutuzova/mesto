@@ -12,6 +12,8 @@ export const jobInput = document.querySelector('.popup__input_value_job');
 export const avatar = document.querySelector('.profile__avatar');
 export const pageName = document.querySelector('.profile__name');
 export const pageJob = document.querySelector('.profile__description');
+export const likeButton = document.querySelector('.element__like');
+export const likeCounter = document.querySelector('.element__number-of-likes');
 export const cardListSelector = '.elements';
 export const popupProfileSelector = '.popup_type_profile';
 export const popupAddPlaceSelector = '.popup_type_add-place';
@@ -19,9 +21,8 @@ export const popupAvatarSelector = '.popup_type_avatar';
 export const popupDeleteImageSelector = '.popup_type_confirm';
 export const userNameSelector = '.profile__name';
 export const userJobSelector = '.profile__description';
+export const userAvatarSelector = '.profile__avatar';
 export const popupPhotoSelector = '.popup_type_open-image';
-
-
 
 
 //Объект настроек формы
