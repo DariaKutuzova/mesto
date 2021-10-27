@@ -24,8 +24,6 @@ export const userJobSelector = '.profile__description';
 export const userAvatarSelector = '.profile__avatar';
 export const popupPhotoSelector = '.popup_type_open-image';
 
-
-
 //Объект настроек формы
 export const configValidation = {
     formSelector: '.popup__form',
@@ -36,29 +34,3 @@ export const configValidation = {
     errorClass: 'popup__input-error_active'
 };
 
-//Массив картинок, подгружаемых на начальную страницу
-export const initialCards = [{
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];

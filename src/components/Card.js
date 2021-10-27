@@ -27,15 +27,15 @@ export default class Card {
         // Запишем разметку в приватное поле _element.
         // Так у других элементов появится доступ к ней.
         this._element = this._getTemplate();
-        this._setEventListeners();
-
-
-        // Добавим данные
-        this._element.querySelector('.element__image').src = this._data.link;
-        this._element.querySelector('.element__image').alt = this._data.name;
-        this._element.querySelector('.element__description').textContent = this._data.name;
+        this._cardImage = this._element.querySelector('.element__image');
         this._likeCounter = this._element.querySelector('.element__number-of-likes');
         this._likeButton = this._element.querySelector('.element__like');
+        this._setEventListeners();
+
+        // Добавим данные
+        this._cardImage.src = this._data.link;
+        this._cardImage.alt = this._data.name;
+        this._element.querySelector('.element__description').textContent = this._data.name;
         this._likeCounter.textContent = this._likes;
         this._checkLikeState();
         this._checkOwner();
@@ -50,7 +50,6 @@ export default class Card {
     }
 
     setLikeCount(data) {
-        this._likeCounter = this._element.querySelector('.element__number-of-likes');
         this._likeCounter.textContent = String(data.likes.length);
     }
 

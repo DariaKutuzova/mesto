@@ -1,33 +1,27 @@
 export default class Section{
-    constructor({data, renderer}, containerSelector, api) {
-        this._renderedItems = data;
+    constructor({renderer}, containerSelector) {
         this._container = document.querySelector(containerSelector);
         this._renderer = renderer;
-        this._api = api;
-    }
-
-    saveCard(data) {
-        this._api
-            .addCard(data)
-            .then((data) => {
-                this.addItem(data.link, data.name)
-            })
-            .catch((err) => {alert(err)});
     }
 
     //Принимает DOM-элемент и добавляет его в контейнер.
     addItem(element) {
         this._container.append(element);
     }
+
+    prependItem(element) {
+        this._container.prepend(element);
+    }
+
     //Очистка контейнера
     clear() {
         this._container.innerHTML = '';
     }
     //Отрисовка всех элементов
-    renderItems() {
+    renderItems(data) {
         this.clear();
 
-        this._renderedItems.forEach((item) => {
+        data.forEach((item) => {
             this._renderer(item);
         });
     }

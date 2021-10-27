@@ -3,6 +3,12 @@ export default class Api{
         this._url = config.url;
         this._headers = config.headers;
     }
+    // проверка ответа
+    _checkResponse(res) {
+        if (res.ok){
+            return res.json();}
+        return Promise.reject('Произошла ошибка')
+    }
 
     //Рендер всех карточек на страницу с сервера
     getAllCards() {
@@ -10,11 +16,7 @@ export default class Api{
             method: 'GET',
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok){
-                return res.json();}
-                return Promise.reject('Произошла ошибка')
-            })
+            .then(this._checkResponse)
     }
     //Добавление карточки из формы
     addCard(data) {
@@ -23,11 +25,7 @@ export default class Api{
             headers: this._headers,
             body: JSON.stringify(data)
         })
-            .then((res) => {
-                if (res.ok){
-                    return res.json();}
-                return Promise.reject('Произошла ошибка')
-            })
+            .then(this._checkResponse)
     }
 //Сменить аватар
     changeAvatar(data) {
@@ -38,11 +36,7 @@ export default class Api{
                 avatar: data.avatar
             })
         })
-            .then((res) => {
-                if (res.ok){
-                    return res.json();}
-                return Promise.reject('Произошла ошибка')
-            })
+            .then(this._checkResponse)
     }
 //Имя и работа с сервера в форму
     getApiUserInfo() {
@@ -50,11 +44,7 @@ export default class Api{
             method: 'GET',
             headers: this._headers,
         })
-            .then((res) => {
-                if (res.ok){
-                    return res.json();}
-                return Promise.reject('Произошла ошибка')
-            })
+            .then(this._checkResponse)
     }
 //Имя и работа из формы на страницу
     patchUserInfo(data) {
@@ -66,36 +56,21 @@ export default class Api{
                 about: data.info
             })
         })
-            .then((res) => {
-                if (res.ok){
-                    return res.json();}
-                return Promise.reject('Произошла ошибка')
-            })
+            .then(this._checkResponse)
     }
 //Удалить карточку
     deleteCard(id) {
         return fetch(`${this._url}cards/${id}`, {
             method: "DELETE",
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject("Произошла ошибка");
-        });
+        }).then(this._checkResponse)
     }
 //Добавить лайк
     addLike(data) {
         return fetch(`${this._url}cards/likes/${data._id}`, {
             method: "PUT",
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        });
+        }).then(this._checkResponse)
     }
 
     //Убрать лайк
@@ -103,13 +78,7 @@ export default class Api{
         return fetch(`${this._url}cards/likes/${data._id}`, {
             method: "DELETE",
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        });
+        }).then(this._checkResponse)
     }
 
 }
